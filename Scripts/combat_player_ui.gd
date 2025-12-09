@@ -18,6 +18,10 @@ func _process(delta: float) -> void:
 
 func load_parse_json(file_path) -> Variant:
 	var json_string = load_file_contents(file_path)
+	var json_parsed = parse_json(json_string)
+	return json_parsed
+
+func parse_json(json_string : String) -> Variant:
 	var json = JSON.new()
 	var error = json.parse(json_string)
 	
@@ -26,7 +30,7 @@ func load_parse_json(file_path) -> Variant:
 		return {}
 	return json.data
 
-func load_file_contents(file_path) -> String:
+func load_file_contents(file_path : String) -> String:
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	var file_string = ""
 	
