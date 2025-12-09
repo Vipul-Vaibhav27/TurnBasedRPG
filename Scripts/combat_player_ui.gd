@@ -1,19 +1,17 @@
 extends Node2D
 
+@onready var menu_item = "res://Scenes/menu_item.tscn"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var action_file_path = "res://Data/player_skills.json"
 	var actions = load_parse_json(action_file_path)
 	for key in actions:
-		print(key, actions[key])
-
+		print(key)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-
-
 
 
 func load_parse_json(file_path) -> Variant:

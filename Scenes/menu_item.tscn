@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://ps8yath2jxud"]
+
+[ext_resource type="Script" uid="uid://pmts3p50nwhg" path="res://Scripts/menu_item.gd" id="1_jv1tv"]
+
+[node name="MenuItem" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_jv1tv")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 40.0
+
+[node name="Text" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 40.0
+theme_override_font_sizes/normal_font_size = 16
+vertical_alignment = 3

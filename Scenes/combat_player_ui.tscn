@@ -1,11 +1,44 @@
-[gd_scene load_steps=2 format=3 uid="uid://doy8kprqpmuyy"]
+[gd_scene load_steps=3 format=3 uid="uid://doy8kprqpmuyy"]
 
 [ext_resource type="Script" uid="uid://bpquny5ul0up3" path="res://Scripts/combat_player_ui.gd" id="1_xynmu"]
+[ext_resource type="PackedScene" uid="uid://ps8yath2jxud" path="res://Scenes/menu_item.tscn" id="2_lqxue"]
 
 [node name="CombatPlayerUI" type="Node2D"]
 script = ExtResource("1_xynmu")
 
 [node name="GridContainer" type="GridContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 4.0
+offset_bottom = 16.0
+theme_override_constants/h_separation = 500
+theme_override_constants/v_separation = 40
 columns = 2
+
+[node name="MenuItem" parent="GridContainer" instance=ExtResource("2_lqxue")]
+layout_mode = 2
+
+[node name="MenuItem2" parent="GridContainer" instance=ExtResource("2_lqxue")]
+layout_mode = 2
+
+[node name="MenuItem3" parent="GridContainer" instance=ExtResource("2_lqxue")]
+layout_mode = 2
+
+[node name="MenuItem4" parent="GridContainer" instance=ExtResource("2_lqxue")]
+layout_mode = 2
+
+[node name="MenuItem5" parent="GridContainer" instance=ExtResource("2_lqxue")]
+layout_mode = 2
+
+[node name="MenuItem6" parent="GridContainer" instance=ExtResource("2_lqxue")]
+layout_mode = 2
+
+[node name="MenuItem7" parent="GridContainer" instance=ExtResource("2_lqxue")]
+layout_mode = 2
+
+[node name="MenuItem8" parent="GridContainer" instance=ExtResource("2_lqxue")]
+layout_mode = 2
+
+[node name="MenuItem9" parent="GridContainer" instance=ExtResource("2_lqxue")]
+layout_mode = 2
+
+[node name="MenuItem10" parent="GridContainer" instance=ExtResource("2_lqxue")]
+layout_mode = 2
