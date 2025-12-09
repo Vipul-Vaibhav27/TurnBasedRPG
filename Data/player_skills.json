@@ -1,7 +1,7 @@
 {
-	"Attack" : [],
-	"Mastery" : {
-		"Defend" : null,
+	"Attack" : null,
+	"Mastery" : { 
+		"Defend" : 0,
 		"Dodge" : 5, 
 		"Parry" : 10,
 	},
