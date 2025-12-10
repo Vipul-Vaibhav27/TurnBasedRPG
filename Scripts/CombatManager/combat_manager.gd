@@ -81,22 +81,20 @@ func enemy_execution() -> void:
 	var thresh = 0.1
 	var poke: PokemonInstance = combat_state.get_attacker(false)
 	
-	# --- HEALING LOGIC ---
-	if curr_hp <= thresh * hp:
-		for moveslot in poke.active_moves:
-			if moveslot.move_data.name in heal_move_names:
-				execute_turn(moveslot)
-				return
-		# If no moves, just do attack
-		var rand_atk = randi() % 4;
-		execute_turn(poke.active_moves[rand_atk])
-		return
-	
-	# --- ATTACKING LOGIC ---
-	var attack_move_slots = []
+	var atk_move_slots = []
+	var heal_move_slots = []
 	for moveslot in poke.active_moves:
 		if moveslot.move_data.name not in heal_move_names:
-			attack_move_slots.append(moveslot)
+			atk_move_slots.append(moveslot)
+		else:
+			heal_move_slots.append(moveslot)
 	
-	var rand_attack = randi() % attack_move_slots.size()
-	execute_turn(attack_move_slots[rand_attack])
+	assert(atk_move_slots.size() != 0, "Wasteful of a pokemon - All heal moves")
+	
+	var rand_attack = randi() % atk_move_slots.size()
+	if heal_move_slots.size() == 0 || curr_hp > thresh * hp:
+		execute_turn(atk_move_slots[rand_attack])
+		return
+	
+	var rand_heal = randi() % heal_move_slots.size()
+	execute_turn(heal_move_slots[rand_heal])
