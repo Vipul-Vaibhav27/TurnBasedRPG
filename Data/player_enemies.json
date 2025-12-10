@@ -1,4 +1,62 @@
 {
-	"Players" : ["Pikachu", "Charmander"],
-	"Enemies" : ["Bulbasour", "Squirtle"],
+	"Player" : {
+		"PK1" : {
+			"name" : "Charmander",
+			"types" : ["Fire"],
+			"base_stats": {
+				"HP": 78,
+				"ATK": 100,
+				"DEF": 200,
+				"SPATK": 100,
+				"SPDEF": 200,
+				"SPD": 10
+			},
+			
+			"xp_yield" : 40,
+		},
+		"PK2" : {
+			"name" : "Squirtle",
+			"types" : ["Water"],
+			"base_stats": {
+				"HP": 150,
+				"ATK": 125,
+				"DEF": 173,
+				"SPATK": 200,
+				"SPDEF": 123,
+				"SPD": 6
+			},
+			
+			"xp_yield" : 40,
+		},
+	},
+	"Enemy" : {
+		"PK3" : {
+			"name" : "Pikachu",
+			"types" : ["Electric"],
+			"base_stats": {
+				"HP": 175,
+				"ATK": 125,
+				"DEF": 125,
+				"SPATK": 250,
+				"SPDEF": 175,
+				"SPD": 3
+			},
+			
+			"xp_yield" : 50,
+		},
+		"PK4" : {
+			"name" : "Bulbasaur",
+			"types" : ["Leaf"],
+			"base_stats": {
+				"HP": 123,
+				"ATK": 184,
+				"DEF": 125,
+				"SPATK": 238,
+				"SPDEF": 138,
+				"SPD": 5
+			},
+			
+			"xp_yield" : 60,
+		},
+	},
 }

@@ -1,7 +1,7 @@
 extends Control
 
 @onready var menu_container = $MenuContainer
-@onready var menu_item = preload("res://Scenes/menu_item.tscn")
+@onready var menu_item = preload("res://Scenes/UI/menu_item.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

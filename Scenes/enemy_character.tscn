@@ -1,6 +1,62 @@
-[gd_scene load_steps=2 format=3 uid="uid://crmeup0pjy7wf"]
+[gd_scene load_steps=10 format=3 uid="uid://crmeup0pjy7wf"]
 
 [ext_resource type="Script" uid="uid://ce135hhera764" path="res://Scripts/enemy_character.gd" id="1_kxb12"]
+[ext_resource type="Texture2D" uid="uid://yxkxoos47v6u" path="res://Assets/Art/worm spritesheet.png" id="2_2u673"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qev2r"]
+atlas = ExtResource("2_2u673")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqa42"]
+atlas = ExtResource("2_2u673")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5k6cu"]
+atlas = ExtResource("2_2u673")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n37lv"]
+atlas = ExtResource("2_2u673")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umhxm"]
+atlas = ExtResource("2_2u673")
+region = Rect2(128, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4pgr"]
+atlas = ExtResource("2_2u673")
+region = Rect2(160, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nsn3q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qev2r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sqa42")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5k6cu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n37lv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umhxm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w4pgr")
+}],
+"loop": true,
+"name": &"bite",
+"speed": 5.0
+}]
 
 [node name="EnemyCharacter" type="Node2D"]
 script = ExtResource("1_kxb12")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nsn3q")
+animation = &"bite"
+frame_progress = 0.16956457

@@ -1,8 +1,76 @@
-[gd_scene load_steps=2 format=3 uid="uid://cf11t36eqnirk"]
+[gd_scene load_steps=12 format=3 uid="uid://cf11t36eqnirk"]
 
 [ext_resource type="Script" uid="uid://75a7pmwur4o5" path="res://Scripts/player_character.gd" id="1_qcwfp"]
+[ext_resource type="Texture2D" uid="uid://cfpxdj6it7bu5" path="res://Assets/Art/eyeball spritesheet.png" id="2_cmdk4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o0f8b"]
+atlas = ExtResource("2_cmdk4")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wko77"]
+atlas = ExtResource("2_cmdk4")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pb3n0"]
+atlas = ExtResource("2_cmdk4")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ons1q"]
+atlas = ExtResource("2_cmdk4")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajo0r"]
+atlas = ExtResource("2_cmdk4")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flf3p"]
+atlas = ExtResource("2_cmdk4")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcng2"]
+atlas = ExtResource("2_cmdk4")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q5hbr"]
+atlas = ExtResource("2_cmdk4")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w775p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o0f8b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wko77")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pb3n0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ons1q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajo0r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flf3p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fcng2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q5hbr")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 8.0
+}]
 
 [node name="PlayerCharacter" type="Node2D"]
 script = ExtResource("1_qcwfp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_w775p")
+animation = &"Idle"
+frame_progress = 0.077106476
