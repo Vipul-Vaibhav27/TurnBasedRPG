@@ -60,7 +60,7 @@ func draw_action_menu():
 func update_action(action):
 	menu_walk_string += ("/" + action)
 	draw_action_menu()
-	
+
 # Function for updating battle log
 func write_to_log(text : String):
 	battle_log.text += text
