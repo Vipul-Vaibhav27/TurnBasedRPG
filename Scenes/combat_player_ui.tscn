@@ -9,7 +9,6 @@ script = ExtResource("1_xynmu")
 [node name="CombatLog" type="TextEdit" parent="."]
 offset_right = 1152.0
 offset_bottom = 100.0
-text = "BROTHER"
 editable = false
 wrap_mode = 1
 

@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var action_menu = $Menu
 @onready var battle_log = $CombatLog
+
 var player_actions
 var menu_walk_string = ""
 
@@ -20,6 +21,7 @@ func _ready() -> void:
 	
 	draw_action_menu()
 
+# Handling input
 func _unhandled_input(event):
 	# TO_DO: FIND BETTER WAY OF HANDLING INPUT
 	
@@ -33,7 +35,7 @@ func _unhandled_input(event):
 			
 			draw_action_menu()
 
-
+# Function to draw and update action menu UI as per user 
 func draw_action_menu():
 	var menu_walk = menu_walk_string.split("/")
 	var action_list = player_actions
@@ -44,10 +46,12 @@ func draw_action_menu():
 
 		assert(action in action_list)
 		
+		# Player has taken action after going to the last node
 		if (type_string(typeof(action_list[action])) == "float"):
 			menu_walk_string = ""
-			draw_action_menu()
-			return
+			action_list = {}
+			write_to_log("Player used " + action)
+			break
 
 		action_list = action_list[action]
 	
@@ -56,6 +60,10 @@ func draw_action_menu():
 func update_action(action):
 	menu_walk_string += ("/" + action)
 	draw_action_menu()
+	
+# Function for updating battle log
+func write_to_log(text : String):
+	battle_log.text += text
 
 # Functions for loading and parsing jsons
 
