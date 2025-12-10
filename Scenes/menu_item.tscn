@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://ps8yath2jxud"]
+
+[ext_resource type="Script" uid="uid://pmts3p50nwhg" path="res://Scripts/menu_item.gd" id="1_jv1tv"]
+
+[node name="MenuItem" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+focus_mode = 2
+script = ExtResource("1_jv1tv")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 40.0
+text = "Placeholder
+"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

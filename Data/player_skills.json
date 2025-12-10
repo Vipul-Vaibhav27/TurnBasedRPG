@@ -1,7 +1,7 @@
 {
-	"Attack" : [],
-	"Mastery" : {
-		"Defend" : null,
+	"Attack" : 0,
+	"Mastery" : { 
+		"Defend" : 0,
 		"Dodge" : 5, 
 		"Parry" : 10,
 	},
@@ -19,5 +19,5 @@
 		"Elixir" : 3,
 		"Blue vial" : 2,
 	},
-	"Run" : null,
+	"Run" : 0,
 }
