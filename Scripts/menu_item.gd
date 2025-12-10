@@ -1,7 +1,6 @@
 extends Control
 
-@onready var text_item = $Text
-@onready var bg = $Background
+@onready var button = $Button
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -10,11 +9,10 @@ func _ready() -> void:
 	update_font_size(25)
 
 func update_size(new_size_vector : Vector2) -> void:
-	text_item.set_size(new_size_vector)
-	bg.set_size(new_size_vector)
+	button.set_size(new_size_vector)
 
 func update_text(new_text : String) -> void:
-	text_item.text = new_text
+	button.text = new_text
 
 func update_font_size(new_size : int) -> void:
-	text_item.add_theme_font_size_override("normal_font_size", new_size)
+	button.add_theme_font_size_override("normal_font_size", new_size)

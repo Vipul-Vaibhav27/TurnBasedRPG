@@ -8,14 +8,7 @@ anchors_preset = 0
 focus_mode = 2
 script = ExtResource("1_jv1tv")
 
-[node name="Background" type="Panel" parent="."]
+[node name="Button" type="Button" parent="."]
 layout_mode = 0
-offset_right = 500.0
-offset_bottom = 40.0
-
-[node name="Text" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_right = 500.0
-offset_bottom = 40.0
-theme_override_font_sizes/normal_font_size = 16
-vertical_alignment = 3
+offset_right = 8.0
+offset_bottom = 8.0

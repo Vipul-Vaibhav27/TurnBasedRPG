@@ -1,17 +1,23 @@
 extends Node2D
 
 @onready var action_container = $VBoxContainer
-@onready var menu_item = preload("res://Scenes/menu_item_unused.tscn")
+@onready var menu_item = preload("res://Scenes/menu_item.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var action_file_path = "res://Data/player_skills.json"
 	var actions = load_parse_json(action_file_path)
 	
-	for key in actions:
+	for action in actions:
 		var action_button = menu_item.instantiate()
 		action_container.add_child(action_button)
-	
+		
+		if (action_button.has_method("update_text")):
+			action_button.update_text(action)
+		else:
+			printerr("Unable to update text")
+		
+	action_container.grab_focus()
 
 func UI_loop():
 	pass
