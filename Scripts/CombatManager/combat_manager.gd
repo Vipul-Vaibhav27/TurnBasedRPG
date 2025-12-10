@@ -21,23 +21,83 @@ func _ready() -> void:
 func initiate_combat() -> void:
 	# TODO: Load Player's pokemons and Enemy's pokemons into combat state and start turns
 	combat_initiated = true
-	
+
 	assert(combat_state.curr_player != "", "Current Pokemon of Player hasn't been set!")
 	assert(combat_state.curr_enemy != "", "Current Pokemon of Enemy hasn't been set!")
-	
+
 	var player_spd = combat_state.get_stat_current(true, ALIAS.SPD)
 	var enemy_spd = combat_state.get_stat_current(true, ALIAS.SPD)
 	turn = Turn.new(player_spd, enemy_spd)
-	
+
+	if not turn.is_player():
+		enemy_execution()
+
 # Connect this function to signal emmitted by UI (When player inputs to change pokemon)
 func change_pokemon(p_pokemon_name: String):
 	combat_state.change_player(p_pokemon_name)
 
+func execute_turn(move_slot: PokemonInstance.MoveSlot):
+	var move = move_slot.move_data
+	var is_player = turn.is_player()
+
+	# ---- Missing Chances
+	if randi() % 100 > move.accuracy:
+		print("Missed!")
+		turn.next()
+		return
+
+	# --- HANDLE Status Moves ---
+	if move.category == Move.Category.STATUS:
+		if move.heal_percent > 0.0:
+			var amount = int(combat_state.get_stat_current(is_player, ALIAS.HP) * move.heal_percent)
+			combat_state.heal(is_player, amount)
+			print("Used " + move.name)
+			move_slot.current_pp -= 1
+			turn.next()
+			return
+
+		# Handle other status moves
+		turn.next()
+		return
+
+	# --- HANDLE Attacks (Physical/Special) ---
+	var damage = DamageCalculator.calculate(combat_state.get_attacker(is_player), combat_state.get_defender(is_player), move)
+	combat_state.take_damage(is_player, damage)
+
+	# --- HANDLE Drain Moves ---
+	if move.is_drain and move.heal_percent > 0.0:
+		# Drain heals based on DAMAGE dealt, not MAX HP
+		var drain_amount = int(damage * move.heal_percent)
+		combat_state.heal(is_player, drain_amount)
+		print("Drained health from the opponent!")
+
+	move_slot.current_pp -= 1
+	turn.next()
+
 func enemy_execution() -> void:
-	# Enemy AI (lol)
+	# Basic Enemy
 	var hp = combat_state.get_stat_current(false, ALIAS.HP)
 	var curr_hp = combat_state.get_stat_current(false, ALIAS.CURRHP)
-	
+
+	var heal_move_names = ["Recover", "Roost", "Giga Drain", "Absorb"]
+
 	var thresh = 0.1
-	
-	# Implement BattleCalculator
+	var poke: PokemonInstance = combat_state.get_attacker(false)
+
+	var atk_move_slots = []
+	var heal_move_slots = []
+	for moveslot in poke.active_moves:
+		if moveslot.move_data.name not in heal_move_names:
+			atk_move_slots.append(moveslot)
+		else:
+			heal_move_slots.append(moveslot)
+
+	assert(atk_move_slots.size() != 0, "Wasteful of a pokemon - All heal moves")
+
+	var rand_attack = randi() % atk_move_slots.size()
+	if heal_move_slots.size() == 0 || curr_hp > thresh * hp:
+		execute_turn(atk_move_slots[rand_attack])
+		return
+
+	var rand_heal = randi() % heal_move_slots.size()
+	execute_turn(heal_move_slots[rand_heal])

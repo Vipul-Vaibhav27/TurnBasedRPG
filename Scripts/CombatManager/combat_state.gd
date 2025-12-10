@@ -51,6 +51,11 @@ class CombatState:
 		
 		curr_enemy = p_pokemon_name
 	
+	func get_attacker(is_player: bool) -> PokemonInstance:
+		return self.player[curr_player] if is_player else self.enemy[curr_enemy]
+	func get_defender(is_player: bool) -> PokemonInstance:
+		return self.enemy[curr_enemy] if is_player else self.player[curr_player]
+	
 	func get_stat(is_player: bool, p_pokemon_name: String, p_stat_name: String):
 		assert(p_stat_name in stat_map, "Maybe a typo in " + p_stat_name + "?")
 		assert((p_pokemon_name in self.player) if is_player else (p_pokemon_name in self.enemy), "While accessing pokemon " + p_pokemon_name + " - This doesn't exist btw in " + "player" if is_player else "enemy")
@@ -70,5 +75,13 @@ class CombatState:
 		else:
 			self.enemy[curr_enemy].current_stats[p_stat_name] = stat_value
 	
-	func is_attack(is_player: bool, atk_name: String):
-		false
+	func heal(is_player: bool, amount: int):
+		var poke: PokemonInstance = get_attacker(is_player)
+		poke.current_hp += amount
+		poke.current_hp = min(poke.current_hp, poke.current_stats[ALIAS.HP])
+	
+	func take_damage(is_player: bool, amount: int):
+		# This means Player did the turn, so opposite will take damage
+		var poke: PokemonInstance = get_defender(is_player)
+		poke.current_hp -= amount
+		poke.current_hp = max(0, poke.current_hp)
