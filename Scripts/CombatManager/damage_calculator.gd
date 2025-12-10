@@ -33,7 +33,7 @@ static func calculate(attacker: PokemonInstance, defender: PokemonInstance, move
 	# B. Type Effectiveness (Super Effective / Not Very Effective)
 	var type_mult = TypeChart.get_effectiveness(move.type, defender.species.types)
 	multiplier *= type_mult
-
+	
 	# C. Random Variance (0.85 to 1.0)
 	multiplier *= randf_range(0.85, 1.0)
 

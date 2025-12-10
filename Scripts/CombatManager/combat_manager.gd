@@ -29,15 +29,74 @@ func initiate_combat() -> void:
 	var enemy_spd = combat_state.get_stat_current(true, ALIAS.SPD)
 	turn = Turn.new(player_spd, enemy_spd)
 	
+	if not turn.is_player():
+		enemy_execution()
+	
 # Connect this function to signal emmitted by UI (When player inputs to change pokemon)
 func change_pokemon(p_pokemon_name: String):
 	combat_state.change_player(p_pokemon_name)
 
+func execute_turn(move_slot: PokemonInstance.MoveSlot):
+	var move = move_slot.move_data
+	var is_player = turn.is_player()
+	
+	# ---- Missing Chances
+	if randi() % 100 > move.accuracy:
+		print("Missed!")
+		return
+	
+	# --- HANDLE Status Moves ---
+	if move.category == Move.Category.STATUS:
+		if move.heal_percent > 0.0:
+			var amount = int(combat_state.get_stat_current(is_player, ALIAS.HP) * move.heal_percent)
+			combat_state.heal(is_player, amount)
+			print("Used " + move.name)
+			move_slot.current_pp -= 1
+			return
+		
+		# Handle other status moves
+		return
+	
+	# --- HANDLE Attacks (Physical/Special) ---
+	var damage = DamageCalculator.calculate(combat_state.get_attacker(is_player), combat_state.get_defender(is_player), move)
+	combat_state.take_damage(is_player, damage)
+	
+	# --- HANDLE Drain Moves ---
+	if move.is_drain and move.heal_percent > 0.0:
+		# Drain heals based on DAMAGE dealt, not MAX HP
+		var drain_amount = int(damage * move.heal_percent)
+		combat_state.heal(is_player, drain_amount)
+		print("Drained health from the opponent!")
+	
+	move_slot.current_pp -= 1
+	turn.next()
+
 func enemy_execution() -> void:
-	# Enemy AI (lol)
+	# Basic Enemy
 	var hp = combat_state.get_stat_current(false, ALIAS.HP)
 	var curr_hp = combat_state.get_stat_current(false, ALIAS.CURRHP)
 	
-	var thresh = 0.1
+	var heal_move_names = ["Recover", "Roost", "Giga Drain", "Absorb"]
 	
-	# Implement BattleCalculator
+	var thresh = 0.1
+	var poke: PokemonInstance = combat_state.get_attacker(false)
+	
+	# --- HEALING LOGIC ---
+	if curr_hp <= thresh * hp:
+		for moveslot in poke.active_moves:
+			if moveslot.move_data.name in heal_move_names:
+				execute_turn(moveslot)
+				return
+		# If no moves, just do attack
+		var rand_atk = randi() % 4;
+		execute_turn(poke.active_moves[rand_atk])
+		return
+	
+	# --- ATTACKING LOGIC ---
+	var attack_move_slots = []
+	for moveslot in poke.active_moves:
+		if moveslot.move_data.name not in heal_move_names:
+			attack_move_slots.append(moveslot)
+	
+	var rand_attack = randi() % attack_move_slots.size()
+	execute_turn(attack_move_slots[rand_attack])
