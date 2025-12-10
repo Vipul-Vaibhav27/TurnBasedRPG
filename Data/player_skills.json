@@ -1,0 +1,23 @@
+{
+	"Attack" : [],
+	"Mastery" : {
+		"Defend" : null,
+		"Dodge" : 5, 
+		"Parry" : 10,
+	},
+	"Sorcery": {
+		"Fireball" : 10,
+		"Waterfall" : 10,
+		"Earthquake" : 20,
+		"Wind Slicer" : 20,
+		"Black Orb" : 30
+	},
+	"Items" : {
+		"Estus Flask" : 2,
+		"Firebomb" : 3,
+		"Invisibility powder" : 1,
+		"Elixir" : 3,
+		"Blue vial" : 2,
+	},
+	"Run" : null,
+}
