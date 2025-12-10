@@ -1,23 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://doy8kprqpmuyy"]
+[gd_scene load_steps=3 format=3 uid="uid://cwqowh0kgiels"]
 
-[ext_resource type="Script" uid="uid://bpquny5ul0up3" path="res://Scripts/combat_player_ui.gd" id="1_xynmu"]
-[ext_resource type="PackedScene" uid="uid://ps8yath2jxud" path="res://Scenes/menu_item.tscn" id="2_lqxue"]
+[ext_resource type="Script" uid="uid://b7om2txfc3aot" path="res://Scripts/combat_player_ui.gd" id="1_xynmu"]
+[ext_resource type="PackedScene" uid="uid://doy8kprqpmuyy" path="res://Scenes/menu.tscn" id="2_lqxue"]
 
 [node name="CombatPlayerUI" type="Node2D"]
 script = ExtResource("1_xynmu")
 
 [node name="CombatLog" type="TextEdit" parent="."]
-offset_right = 1160.0
+offset_right = 1152.0
 offset_bottom = 100.0
 text = "BROTHER"
 editable = false
 wrap_mode = 1
 
-[node name="ActionContainer" type="VBoxContainer" parent="."]
+[node name="Menu" parent="." instance=ExtResource("2_lqxue")]
 offset_top = 150.0
 offset_bottom = 150.0
-focus_mode = 2
-theme_override_constants/separation = 40
-
-[node name="MenuItem" parent="ActionContainer" instance=ExtResource("2_lqxue")]
-layout_mode = 2

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="TurnBasedRPG"
-run/main_scene="uid://doy8kprqpmuyy"
+run/main_scene="uid://cwqowh0kgiels"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
