@@ -8,10 +8,10 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_xhh6f")
 
-[node name="ActionContainer" type="VBoxContainer" parent="."]
+[node name="MenuContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
 focus_mode = 2
 theme_override_constants/separation = 40
 
-[node name="MenuItem" parent="ActionContainer" instance=ExtResource("2_cayip")]
+[node name="MenuItem" parent="MenuContainer" instance=ExtResource("2_cayip")]
 layout_mode = 2

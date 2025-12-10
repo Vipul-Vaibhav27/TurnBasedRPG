@@ -1,13 +1,61 @@
 extends Node2D
 
+@onready var action_menu = $Menu
+@onready var battle_log = $CombatLog
+var player_actions
+var menu_walk_string = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var action_file_path = "res://Data/player_skills.json"
-	var actions = load_parse_json(action_file_path)
+	player_actions = load_parse_json(action_file_path)
 	
-	#create_menu(actions, Vector2(250,40), action_container)
-	#action_container.grab_focus()
+	if (action_menu.has_signal("player_chose_item")):
+		var pressed = update_action.bind()
+		var err = action_menu.player_chose_item.connect(pressed)
+		if (err != OK):
+			printerr("Unable to connect. Error: ", error_string(err))
+	else:
+		printerr("Combat UI: No signal to notify menu item picked")
+	
+	draw_action_menu()
+
+func _unhandled_input(event):
+	# TO_DO: FIND BETTER WAY OF HANDLING INPUT
+	
+	if event is InputEventKey:
+		if event.pressed and event.is_action_pressed("ui_cancel"):
+			
+			var menu_walk = menu_walk_string.split("/")
+			if (menu_walk.size() != 1):
+				menu_walk.remove_at(menu_walk.size() - 1)
+			menu_walk_string = "/".join(menu_walk)
+			
+			draw_action_menu()
+
+
+func draw_action_menu():
+	var menu_walk = menu_walk_string.split("/")
+	var action_list = player_actions
+	
+	for action in menu_walk:
+		if (action == ""):
+			continue
+
+		assert(action in action_list)
+		
+		if (type_string(typeof(action_list[action])) == "float"):
+			menu_walk_string = ""
+			draw_action_menu()
+			return
+
+		action_list = action_list[action]
+	
+	action_menu.create_menu(action_list, Vector2(250,40))
+
+func update_action(action):
+	menu_walk_string += ("/" + action)
+	draw_action_menu()
 
 # Functions for loading and parsing jsons
 
