@@ -3,7 +3,7 @@ extends Control
 @onready var action_menu = $Menu
 @onready var battle_log = $CombatLog
 
-var player_actions
+var player_actions = {}
 var menu_walk_string = ""
 
 signal action_to_execute(action)
@@ -53,7 +53,7 @@ func draw_action_menu():
 		
 		# Player has taken action after going to the last node
 		var action_type = type_string(typeof(action_list[action]))
-		if (action_type == "float" or action_type == "int"):
+		if (action_type == "int"):
 			menu_walk_string = ""
 			action_list = {}
 			write_to_log.emit("Player used " + action)
@@ -101,10 +101,15 @@ func load_file_contents(file_path : String) -> String:
 	return file_string
 
 func _on_player_character_active_player_pokemon(pokemon: PokemonInstance) -> void:
-	var action_file_path = "res://Data/player_skills.json"
-	player_actions = load_parse_json(action_file_path)
+	var item_file_path = "res://Data/player_items.json"
+	var items = load_parse_json(item_file_path)["Items"]
 	
 	player_actions["Moves"] = {}
+	player_actions["Items"] = {}
+	
+	for item in items:
+		if (items[item] != 0):
+			player_actions["Items"][item] = int(items[item])
 	
 	for move in pokemon.active_moves:
 		if (move.current_pp != 0): # If no more moves exist, don't show them
