@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Onix"
+types = [12, 8]
+base_stats = {
+"HP": 35, "Attack": 45, "Defense": 160, "SpAtk": 30, "SpDef": 45, "SPD": 70
+}
+ev_yield = {
+"HP": 0, "Attack": 0, "Defense": 1, "SpAtk": 0, "SpDef": 0, "SPD": 0
+}
+xp_yield = 77

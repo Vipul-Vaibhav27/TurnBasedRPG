@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Oddish"
+types = [4, 7]
+base_stats = {
+"HP": 45, "Attack": 50, "Defense": 55, "SpAtk": 75, "SpDef": 65, "SPD": 30
+}
+ev_yield = {
+"HP": 0, "Attack": 0, "Defense": 0, "SpAtk": 1, "SpDef": 0, "SPD": 0
+}
+xp_yield = 64

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Raticate"
+types = [0]
+base_stats = {
+"HP": 55, "Attack": 81, "Defense": 60, "SpAtk": 50, "SpDef": 70, "SPD": 97
+}
+ev_yield = {
+"HP": 0, "Attack": 0, "Defense": 0, "SpAtk": 0, "SpDef": 0, "SPD": 2
+}
+xp_yield = 145

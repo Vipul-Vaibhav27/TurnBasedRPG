@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Ekans"
+types = [7]
+base_stats = {
+"HP": 35, "Attack": 60, "Defense": 44, "SpAtk": 40, "SpDef": 54, "SPD": 55
+}
+ev_yield = {
+"HP": 0, "Attack": 1, "Defense": 0, "SpAtk": 0, "SpDef": 0, "SPD": 0
+}
+xp_yield = 58

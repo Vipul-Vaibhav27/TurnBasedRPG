@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Farfetchd"
+types = [0, 9]
+base_stats = {
+"HP": 52, "Attack": 90, "Defense": 55, "SpAtk": 58, "SpDef": 62, "SPD": 60
+}
+ev_yield = {
+"HP": 0, "Attack": 1, "Defense": 0, "SpAtk": 0, "SpDef": 0, "SPD": 0
+}
+xp_yield = 132
