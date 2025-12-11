@@ -11,7 +11,10 @@ var player_actions = {
 
 var menu_walk_string = ""
 
-signal action_to_execute(action)
+signal item_to_use(item)
+signal change_to_pokemon(new_pokemon)
+signal move_to_use(move)
+
 signal write_to_log(text)
 
 # Called when the node enters the scene tree for the first time.
@@ -24,33 +27,21 @@ func _ready() -> void:
 	for item in items:
 		if (items[item] != 0):
 			player_actions["Items"][item] = int(items[item])
+	player_actions["Items"]["Back"] = 0
 	
+	var err;
 	# Signal inform item chosen by player
 	if (action_menu.has_signal("player_chose_item")):
-		var err = action_menu.player_chose_item.connect(update_action.bind())
+		err = action_menu.player_chose_item.connect(update_action.bind())
 		if (err != OK):
 			printerr("Unable to connect menu. Error: ", error_string(err))
 	else:
 		printerr("Combat UI: No signal to notify menu item picked")
 	
 	# Signal inform item to write to log
-	var err = write_to_log.connect(update_log.bind())
+	err = write_to_log.connect(update_log.bind())
 	if (err != OK):
 		printerr("Unable to connect logger. Error: ", error_string(err))
-
-# Handling input
-func _unhandled_input(event):
-	# TO_DO: FIND BETTER WAY OF HANDLING INPUT
-	
-	if event is InputEventKey:
-		if event.pressed and event.is_action_pressed("ui_cancel"):
-			
-			var menu_walk = menu_walk_string.split("/")
-			if (menu_walk.size() != 1):
-				menu_walk.remove_at(menu_walk.size() - 1)
-			menu_walk_string = "/".join(menu_walk)
-			
-			draw_action_menu()
 
 # Function to draw and update action menu UI as per user 
 func draw_action_menu():
@@ -69,16 +60,27 @@ func draw_action_menu():
 		if (action_type == "int"):
 			menu_walk_string = ""
 			action_list = {}
-			write_to_log.emit("Player used " + action)
-			action_to_execute.emit(action)
-			break
+			
+			if ("Moves" in menu_walk):
+				move_to_use.emit(action)
+			elif ("Items" in menu_walk):
+				item_to_use.emit(action)
+			else:
+				change_to_pokemon.emit(action)
+			return
 
 		action_list = action_list[action]
 
 	action_menu.create_menu(action_list, Vector2(250,40))
 
 func update_action(action):
-	menu_walk_string += ("/" + action)
+	if (action == "Back"):
+		var menu_walk = menu_walk_string.split("/")
+		menu_walk.remove_at(menu_walk.size() - 1)
+		menu_walk_string = "/".join(menu_walk)
+		
+	else:
+		menu_walk_string += ("/" + action)
 	draw_action_menu()
 
 # Function for updating battle log
@@ -118,7 +120,9 @@ func _on_player_character_active_player_pokemon(pokemon: PokemonInstance) -> voi
 	for move in pokemon.active_moves:
 		if (move.current_pp != 0): # If no more moves exist, don't show them
 			player_actions["Moves"][move.move_data.name] = move.current_pp
+	player_actions["Moves"]["Back"] = 0
 
 func _on_player_character_all_player_pokemon(pokemon_instances: Variant) -> void:
 	for pokemon in pokemon_instances:
 		player_actions["Change"][pokemon] = 0
+	player_actions["Change"]["Back"] = 0
