@@ -11,7 +11,6 @@ func _ready() -> void:
 		var instance = PokemonInstance
 		player_pokemon_list[pokemon]["name"]
 		player_pokemon_instances[instance.name] = instance
-	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
