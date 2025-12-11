@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 @onready var action_menu = $Menu
 @onready var battle_log = $CombatLog
@@ -52,7 +52,8 @@ func draw_action_menu():
 		assert(action in action_list)
 		
 		# Player has taken action after going to the last node
-		if (type_string(typeof(action_list[action])) == "float"):
+		var action_type = type_string(typeof(action_list[action]))
+		if (action_type == "float" or action_type == "int"):
 			menu_walk_string = ""
 			action_list = {}
 			write_to_log.emit("Player used " + action)
@@ -106,6 +107,6 @@ func _on_player_character_active_player_pokemon(pokemon: PokemonInstance) -> voi
 	player_actions["Moves"] = {}
 	
 	for move in pokemon.active_moves:
-		if (move.current_pp != 0):
+		if (move.current_pp != 0): # If no more moves exist, don't show them
 			player_actions["Moves"][move.move_data.name] = move.current_pp
 	draw_action_menu()
