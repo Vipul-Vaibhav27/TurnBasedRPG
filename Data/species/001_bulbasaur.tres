@@ -1,15 +1,25 @@
-[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3 uid="uid://cn5nyuqptkmu5"]
 
-[ext_resource type="Script" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://dhlx803nye16j" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
 
 [resource]
 script = ExtResource("1_script")
 name = "Bulbasaur"
-types = [4, 7]
+types = Array[int]([4, 7])
 base_stats = {
-"HP": 45, "Attack": 49, "Defense": 49, "SpAtk": 65, "SpDef": 65, "SPD": 45
+"Attack": 49,
+"Defense": 49,
+"HP": 45,
+"SPD": 45,
+"SpAtk": 65,
+"SpDef": 65
 }
 ev_yield = {
-"HP": 0, "Attack": 0, "Defense": 0, "SpAtk": 1, "SpDef": 0, "SPD": 0
+"Attack": 0,
+"Defense": 0,
+"HP": 0,
+"SPD": 0,
+"SpAtk": 1,
+"SpDef": 0
 }
 xp_yield = 64

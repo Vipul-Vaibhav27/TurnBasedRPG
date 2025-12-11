@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://t3vnm1lbpphd"]
+
+[ext_resource type="PackedScene" uid="uid://cwqowh0kgiels" path="res://Scenes/UI/combat_player_ui.tscn" id="1_7uj85"]
+[ext_resource type="PackedScene" uid="uid://cf11t36eqnirk" path="res://Scenes/player_character.tscn" id="2_2ip8y"]
+[ext_resource type="PackedScene" uid="uid://crmeup0pjy7wf" path="res://Scenes/enemy_character.tscn" id="3_vtehv"]
+[ext_resource type="PackedScene" uid="uid://dxvjktdaf834m" path="res://Scenes/combat_manager.tscn" id="4_loea4"]
+
+[node name="CombatScene" type="Node2D"]
+
+[node name="CombatPlayerUI" parent="." instance=ExtResource("1_7uj85")]
+
+[node name="PlayerCharacter" parent="." instance=ExtResource("2_2ip8y")]
+position = Vector2(200, 500)
+scale = Vector2(6, 6)
+
+[node name="EnemyCharacter" parent="." instance=ExtResource("3_vtehv")]
+position = Vector2(900, 200)
+scale = Vector2(6, 6)
+
+[node name="CombatManager" parent="." instance=ExtResource("4_loea4")]
+
+[connection signal="active_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="_on_player_character_active_player_pokemon"]

@@ -11,23 +11,19 @@ signal write_to_log(text)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var action_file_path = "res://Data/player_skills.json"
-	player_actions = load_parse_json(action_file_path)
-	
+	# Signal inform item chosen by player
 	if (action_menu.has_signal("player_chose_item")):
-		var pressed = update_action.bind()
-		var err = action_menu.player_chose_item.connect(pressed)
+		var err = action_menu.player_chose_item.connect(update_action.bind())
 		if (err != OK):
 			printerr("Unable to connect menu. Error: ", error_string(err))
 	else:
 		printerr("Combat UI: No signal to notify menu item picked")
 	
-	var log_func = update_log.bind()
-	var err = write_to_log.connect(log_func)
+	# Signal inform item to write to log
+	var err = write_to_log.connect(update_log.bind())
 	if (err != OK):
 		printerr("Unable to connect logger. Error: ", error_string(err))
-	
-	draw_action_menu()
+
 
 # Handling input
 func _unhandled_input(event):
@@ -46,6 +42,7 @@ func _unhandled_input(event):
 # Function to draw and update action menu UI as per user 
 func draw_action_menu():
 	var menu_walk = menu_walk_string.split("/")
+	print(menu_walk)
 	var action_list = player_actions
 	
 	for action in menu_walk:
@@ -63,7 +60,7 @@ func draw_action_menu():
 			break
 
 		action_list = action_list[action]
-	
+
 	action_menu.create_menu(action_list, Vector2(250,40))
 
 func update_action(action):
@@ -101,4 +98,14 @@ func load_file_contents(file_path : String) -> String:
 		file.close()
 
 	return file_string
+
+func _on_player_character_active_player_pokemon(pokemon: PokemonInstance) -> void:
+	var action_file_path = "res://Data/player_skills.json"
+	player_actions = load_parse_json(action_file_path)
 	
+	player_actions["Moves"] = {}
+	
+	for move in pokemon.active_moves:
+		if (move.current_pp != 0):
+			player_actions["Moves"][move.move_data.name] = move.current_pp
+	draw_action_menu()

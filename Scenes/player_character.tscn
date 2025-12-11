@@ -73,4 +73,5 @@ script = ExtResource("1_qcwfp")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_w775p")
 animation = &"Idle"
-frame_progress = 0.077106476
+frame_progress = 0.02909856
+flip_h = true
