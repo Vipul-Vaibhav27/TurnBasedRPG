@@ -35,7 +35,7 @@ func create_menu(items : Variant, item_size : Vector2) -> void:
 			printerr("No method to update size")
 
 		if (item_button.has_signal("menu_item_picked")):
-			var pressed = button_pressed.bind(item)
+			var pressed = button_pressed.bind()
 			var err = item_button.menu_item_picked.connect(pressed)
 			if (err != OK):
 				printerr("Unable to connect. Error: ", error_string(err))

@@ -12,7 +12,7 @@ func update_size(new_size_vector : Vector2) -> void:
 func update_text(new_text : String) -> void:
 	button.text = new_text
 
-signal menu_item_picked
+signal menu_item_picked(item_picked)
 
 func _on_button_pressed() -> void:
-	menu_item_picked.emit()
+	menu_item_picked.emit(button.text)

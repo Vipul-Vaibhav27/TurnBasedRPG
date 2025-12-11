@@ -6,6 +6,9 @@ extends Node2D
 var player_actions
 var menu_walk_string = ""
 
+signal action_to_execute(action)
+signal write_to_log(text)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var action_file_path = "res://Data/player_skills.json"
@@ -15,9 +18,14 @@ func _ready() -> void:
 		var pressed = update_action.bind()
 		var err = action_menu.player_chose_item.connect(pressed)
 		if (err != OK):
-			printerr("Unable to connect. Error: ", error_string(err))
+			printerr("Unable to connect menu. Error: ", error_string(err))
 	else:
 		printerr("Combat UI: No signal to notify menu item picked")
+	
+	var log_func = update_log.bind()
+	var err = write_to_log.connect(log_func)
+	if (err != OK):
+		printerr("Unable to connect logger. Error: ", error_string(err))
 	
 	draw_action_menu()
 
@@ -50,7 +58,8 @@ func draw_action_menu():
 		if (type_string(typeof(action_list[action])) == "float"):
 			menu_walk_string = ""
 			action_list = {}
-			write_to_log("Player used " + action)
+			write_to_log.emit("Player used " + action)
+			action_to_execute.emit(action)
 			break
 
 		action_list = action_list[action]
@@ -62,7 +71,7 @@ func update_action(action):
 	draw_action_menu()
 
 # Function for updating battle log
-func write_to_log(text : String):
+func update_log(text : String):
 	battle_log.text += text
 
 # Functions for loading and parsing jsons
