@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Ivysaur"
+types = [4, 7]
+base_stats = {
+"HP": 60, "Attack": 62, "Defense": 63, "SpAtk": 80, "SpDef": 80, "SPD": 60
+}
+ev_yield = {
+"HP": 0, "Attack": 0, "Defense": 0, "SpAtk": 1, "SpDef": 1, "SPD": 0
+}
+xp_yield = 142

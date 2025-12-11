@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Tentacool"
+types = [2, 7]
+base_stats = {
+"HP": 40, "Attack": 40, "Defense": 35, "SpAtk": 50, "SpDef": 100, "SPD": 70
+}
+ev_yield = {
+"HP": 0, "Attack": 0, "Defense": 0, "SpAtk": 0, "SpDef": 1, "SPD": 0
+}
+xp_yield = 67

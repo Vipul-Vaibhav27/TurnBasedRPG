@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Hypno"
+types = [10]
+base_stats = {
+"HP": 85, "Attack": 73, "Defense": 70, "SpAtk": 73, "SpDef": 115, "SPD": 67
+}
+ev_yield = {
+"HP": 0, "Attack": 0, "Defense": 0, "SpAtk": 0, "SpDef": 2, "SPD": 0
+}
+xp_yield = 169

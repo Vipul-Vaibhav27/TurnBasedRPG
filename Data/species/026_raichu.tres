@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Raichu"
+types = [3]
+base_stats = {
+"HP": 60, "Attack": 90, "Defense": 55, "SpAtk": 90, "SpDef": 80, "SPD": 110
+}
+ev_yield = {
+"HP": 0, "Attack": 0, "Defense": 0, "SpAtk": 0, "SpDef": 0, "SPD": 3
+}
+xp_yield = 218

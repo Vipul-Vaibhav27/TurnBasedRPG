@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Wartortle"
+types = [2]
+base_stats = {
+"HP": 59, "Attack": 63, "Defense": 80, "SpAtk": 65, "SpDef": 80, "SPD": 58
+}
+ev_yield = {
+"HP": 0, "Attack": 0, "Defense": 1, "SpAtk": 0, "SpDef": 1, "SPD": 0
+}
+xp_yield = 142

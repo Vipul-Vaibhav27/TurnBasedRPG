@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Move" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pokemon/move_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Bone Club"
+type = 8
+category = 0
+power = 65
+accuracy = 85
+max_pp = 20
+priority = 0
+heal_percent = 0.0
+is_drain = false

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Wigglytuff"
+types = [0, 17]
+base_stats = {
+"HP": 140, "Attack": 70, "Defense": 45, "SpAtk": 85, "SpDef": 50, "SPD": 45
+}
+ev_yield = {
+"HP": 3, "Attack": 0, "Defense": 0, "SpAtk": 0, "SpDef": 0, "SPD": 0
+}
+xp_yield = 196

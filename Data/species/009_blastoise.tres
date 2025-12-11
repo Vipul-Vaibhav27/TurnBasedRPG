@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Blastoise"
+types = [2]
+base_stats = {
+"HP": 79, "Attack": 83, "Defense": 100, "SpAtk": 85, "SpDef": 105, "SPD": 78
+}
+ev_yield = {
+"HP": 0, "Attack": 0, "Defense": 0, "SpAtk": 0, "SpDef": 3, "SPD": 0
+}
+xp_yield = 239
