@@ -20,3 +20,4 @@ scale = Vector2(6, 6)
 [node name="CombatManager" parent="." instance=ExtResource("4_loea4")]
 
 [connection signal="active_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="_on_player_character_active_player_pokemon"]
+[connection signal="all_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="_on_player_character_all_player_pokemon"]

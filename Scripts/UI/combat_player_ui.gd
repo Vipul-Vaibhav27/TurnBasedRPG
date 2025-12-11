@@ -3,7 +3,12 @@ extends Control
 @onready var action_menu = $Menu
 @onready var battle_log = $CombatLog
 
-var player_actions = {}
+var player_actions = {
+	"Moves" : {},
+	"Change" : {},
+	"Items" : {},
+}
+
 var menu_walk_string = ""
 
 signal action_to_execute(action)
@@ -11,6 +16,15 @@ signal write_to_log(text)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	# Items carried by player
+	var item_file_path = "res://Data/player_items.json"
+	var items = load_parse_json(item_file_path)["Items"]
+	
+	for item in items:
+		if (items[item] != 0):
+			player_actions["Items"][item] = int(items[item])
+	
 	# Signal inform item chosen by player
 	if (action_menu.has_signal("player_chose_item")):
 		var err = action_menu.player_chose_item.connect(update_action.bind())
@@ -23,7 +37,6 @@ func _ready() -> void:
 	var err = write_to_log.connect(update_log.bind())
 	if (err != OK):
 		printerr("Unable to connect logger. Error: ", error_string(err))
-
 
 # Handling input
 func _unhandled_input(event):
@@ -101,17 +114,11 @@ func load_file_contents(file_path : String) -> String:
 	return file_string
 
 func _on_player_character_active_player_pokemon(pokemon: PokemonInstance) -> void:
-	var item_file_path = "res://Data/player_items.json"
-	var items = load_parse_json(item_file_path)["Items"]
-	
-	player_actions["Moves"] = {}
-	player_actions["Items"] = {}
-	
-	for item in items:
-		if (items[item] != 0):
-			player_actions["Items"][item] = int(items[item])
-	
+
 	for move in pokemon.active_moves:
 		if (move.current_pp != 0): # If no more moves exist, don't show them
 			player_actions["Moves"][move.move_data.name] = move.current_pp
-	draw_action_menu()
+
+func _on_player_character_all_player_pokemon(pokemon_instances: Variant) -> void:
+	for pokemon in pokemon_instances:
+		player_actions["Change"][pokemon] = 0
