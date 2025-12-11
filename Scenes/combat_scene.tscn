@@ -19,5 +19,14 @@ scale = Vector2(6, 6)
 
 [node name="CombatManager" parent="." instance=ExtResource("4_loea4")]
 
-[connection signal="active_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="_on_player_character_active_player_pokemon"]
-[connection signal="all_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="_on_player_character_all_player_pokemon"]
+[connection signal="change_to_pokemon" from="CombatPlayerUI" to="CombatManager" method="change_pokemon"]
+[connection signal="combat_start" from="CombatPlayerUI" to="CombatManager" method="initiate_combat"]
+[connection signal="move_to_use" from="CombatPlayerUI" to="CombatManager" method="player_execution"]
+[connection signal="active_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="update_player_moves"]
+[connection signal="all_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="update_player_pokemon"]
+[connection signal="battle_log_choser_added" from="CombatManager" to="CombatPlayerUI" method="update_log"]
+[connection signal="battle_log_critical_added" from="CombatManager" to="CombatPlayerUI" method="update_log"]
+[connection signal="battle_log_damage_added" from="CombatManager" to="CombatPlayerUI" method="update_log"]
+[connection signal="battle_log_heal_added" from="CombatManager" to="CombatPlayerUI" method="update_log"]
+[connection signal="battle_log_miss_added" from="CombatManager" to="CombatPlayerUI" method="update_log"]
+[connection signal="execute_player_turn" from="CombatManager" to="CombatPlayerUI" method="player_turn_start"]

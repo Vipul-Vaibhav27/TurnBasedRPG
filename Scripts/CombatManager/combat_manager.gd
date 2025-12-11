@@ -11,6 +11,8 @@ signal battle_log_critical_added(log: String) # Critical Hit!
 signal battle_log_damage_added(log: String)	 # It dealt 12 damage to Charmander.
 signal battle_log_heal_added(log: String) # Charmander healed 15 damage.
 
+signal execute_player_turn
+
 class Turn:
 	var curr_turn = null # 0 for player, 1 for enemy
 	func _init(player_spd: int, enemy_spd: int) -> void:
@@ -38,6 +40,8 @@ func initiate_combat() -> void:
 
 	if not turn.is_player():
 		enemy_execution()
+	else:
+		execute_player_turn.emit()
 
 # Connect this function to signal emmitted by UI (When player inputs to change pokemon)
 func change_pokemon(p_pokemon_name: String):
