@@ -4,6 +4,13 @@ var combat_state = CS.CombatState.new() # Initialization
 var combat_initiated: bool = false
 var turn: Turn
 
+# To separate different types of battle log
+signal battle_log_choser_added(log: String) # Charmander chose FireBall.
+signal battle_log_miss_added(log: String) # FireBall missed!
+signal battle_log_critical_added(log: String) # Critical Hit!
+signal battle_log_damage_added(log: String)	 # It dealt 12 damage to Charmander.
+signal battle_log_heal_added(log: String) # Charmander healed 15 damage.
+
 class Turn:
 	var curr_turn = null # 0 for player, 1 for enemy
 	func _init(player_spd: int, enemy_spd: int) -> void:
@@ -36,13 +43,22 @@ func initiate_combat() -> void:
 func change_pokemon(p_pokemon_name: String):
 	combat_state.change_player(p_pokemon_name)
 
+# UI-SYSTEM should send their moves via this function
+func player_execution(move_slot: PokemonInstance.MoveSlot):
+	execute_turn(move_slot)
+
 func execute_turn(move_slot: PokemonInstance.MoveSlot):
 	var move = move_slot.move_data
 	var is_player = turn.is_player()
 
+	var attacker = combat_state.get_attacker(is_player)
+	var defender = combat_state.get_defender(is_player)
+
+	battle_log_choser_added.emit(attacker.species.name + " chose " + move.name + ".")
+
 	# ---- Missing Chances
 	if randi() % 100 > move.accuracy:
-		print("Missed!")
+		battle_log_miss_added.emit(move.name + " missed!");
 		turn.next()
 		return
 
@@ -51,7 +67,7 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot):
 		if move.heal_percent > 0.0:
 			var amount = int(combat_state.get_stat_current(is_player, ALIAS.HP) * move.heal_percent)
 			combat_state.heal(is_player, amount)
-			print("Used " + move.name)
+			battle_log_heal_added.emit(attacker.name + " healed " + str(amount) + " damage.")
 			move_slot.current_pp -= 1
 			turn.next()
 			return
@@ -61,15 +77,16 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot):
 		return
 
 	# --- HANDLE Attacks (Physical/Special) ---
-	var damage = DamageCalculator.calculate(combat_state.get_attacker(is_player), combat_state.get_defender(is_player), move)
+	var damage = DamageCalculator.calculate(attacker, defender, move, battle_log_critical_added)
 	combat_state.take_damage(is_player, damage)
 
+	battle_log_damage_added.emit("It dealt " + str(damage) + " to " + defender.species.name + ".")
 	# --- HANDLE Drain Moves ---
 	if move.is_drain and move.heal_percent > 0.0:
 		# Drain heals based on DAMAGE dealt, not MAX HP
 		var drain_amount = int(damage * move.heal_percent)
 		combat_state.heal(is_player, drain_amount)
-		print("Drained health from the opponent!")
+		battle_log_heal_added.emit(attacker.species.name + " healed " + str(drain_amount) + " damage.")
 
 	move_slot.current_pp -= 1
 	turn.next()

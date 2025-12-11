@@ -1,6 +1,6 @@
 class_name DamageCalculator
 
-static func calculate(attacker: PokemonInstance, defender: PokemonInstance, move: Move) -> int:
+static func calculate(attacker: PokemonInstance, defender: PokemonInstance, move: Move, sig: Signal) -> int:
 	# --- Step 0: Status Moves do 0 damage ---
 	if move.category == Move.Category.STATUS:
 		return 0
@@ -9,7 +9,7 @@ static func calculate(attacker: PokemonInstance, defender: PokemonInstance, move
 	# Physical moves use ATK vs DEF. Special moves use SP_ATK vs SP_DEF.
 	var attack_stat = 0
 	var defense_stat = 0
-	
+
 	if move.category == Move.Category.PHYSICAL:
 		attack_stat = attacker.current_stats[ALIAS.ATK]
 		defense_stat = defender.current_stats[ALIAS.DEF]
@@ -33,13 +33,13 @@ static func calculate(attacker: PokemonInstance, defender: PokemonInstance, move
 	# B. Type Effectiveness (Super Effective / Not Very Effective)
 	var type_mult = TypeChart.get_effectiveness(move.type, defender.species.types)
 	multiplier *= type_mult
-	
+
 	# C. Random Variance (0.85 to 1.0)
 	multiplier *= randf_range(0.85, 1.0)
 
 	# D. Critical Hit (1/16 chance -> 1.5x)
 	if randf() < 0.0625:
-		print("Critical Hit!")
+		sig.emit("Critical Hit!");
 		multiplier *= 1.5
 
 	# --- Step 4: Final Result ---
