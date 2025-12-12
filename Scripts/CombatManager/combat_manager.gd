@@ -29,7 +29,6 @@ class Turn:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print("yo yo")
 	combat_ui.connect("combat_start", ui_got_ready)
 	combat_ui.connect("change_to_pokemon", change_pokemon)
 	combat_ui.connect("move_to_use", player_execution)
@@ -43,20 +42,17 @@ func check_ready():
 		ready_count = 0
 
 func ui_got_ready():
-	print("dabbs")
 	check_ready()
 
 func get_player_pokes(pokemon_instances, active_name):
 	combat_state.curr_player = active_name
 	combat_state.player = pokemon_instances
-	print(active_name)
 	check_ready()
 	
 
 func get_enemy_pokes(pokemon_instances, active_name):
 	combat_state.curr_enemy = active_name
 	combat_state.enemy = pokemon_instances
-	print(active_name)
 	check_ready()
 
 func initiate_combat() -> void:
@@ -80,8 +76,11 @@ func initiate_combat() -> void:
 
 # Connect this function to signal emmitted by UI (When player inputs to change pokemon)
 func change_pokemon(p_pokemon_name: String):
+	turn.next()
 	combat_state.change_player(p_pokemon_name)
-	await get_tree().create_timer(1.0).timeout
+	player.change_active_pokemon(combat_state.player[p_pokemon_name])
+	print(combat_state.curr_player)
+	enemy_execution()
 
 # UI-SYSTEM should send their moves via this function
 func player_execution(move_slot: PokemonInstance.MoveSlot):
