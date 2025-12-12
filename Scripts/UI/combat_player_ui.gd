@@ -76,6 +76,7 @@ func update_action(action):
 # Function for updating battle log
 func update_log(text : String):
 	battle_log.text += text
+	battle_log.text += '\n'
 
 # Functions for loading and parsing jsons
 
