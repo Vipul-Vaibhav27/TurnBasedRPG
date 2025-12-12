@@ -4,6 +4,11 @@ var combat_state = CS.CombatState.new() # Initialization
 var combat_initiated: bool = false
 var turn: Turn
 
+@export var combat_ui: Control
+@export var player: Node2D
+@export var enemy: Node2D
+var ready_count = 0
+
 # To separate different types of battle log
 signal battle_log_choser_added(log: String) # Charmander chose FireBall.
 signal battle_log_miss_added(log: String) # FireBall missed!
@@ -24,20 +29,50 @@ class Turn:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	print("yo yo")
+	combat_ui.connect("combat_start", ui_got_ready)
+	combat_ui.connect("change_to_pokemon", change_pokemon)
+	combat_ui.connect("move_to_use", player_execution)
+	player.connect("all_player_pokemon_manager", get_player_pokes)
+	enemy.connect("all_enemy_pokemon_manager", get_enemy_pokes)
 
-# Connect this function to signal emmitted by UI (Start Combat) button
+func check_ready():
+	ready_count += 1
+	if ready_count >= 3:
+		initiate_combat()
+		ready_count = 0
+
+func ui_got_ready():
+	print("dabbs")
+	check_ready()
+
+func get_player_pokes(pokemon_instances, active_name):
+	combat_state.curr_player = active_name
+	combat_state.player = pokemon_instances
+	print(active_name)
+	check_ready()
+	
+
+func get_enemy_pokes(pokemon_instances, active_name):
+	combat_state.curr_enemy = active_name
+	combat_state.enemy = pokemon_instances
+	print(active_name)
+	check_ready()
+
 func initiate_combat() -> void:
-	# TODO: Load Player's pokemons and Enemy's pokemons into combat state and start turns
 	combat_initiated = true
 
 	assert(combat_state.curr_player != "", "Current Pokemon of Player hasn't been set!")
 	assert(combat_state.curr_enemy != "", "Current Pokemon of Enemy hasn't been set!")
-
+	
+	print(combat_state.curr_player)
+	print(combat_state.player)
+	
 	var player_spd = combat_state.get_stat_current(true, ALIAS.SPD)
 	var enemy_spd = combat_state.get_stat_current(true, ALIAS.SPD)
 	turn = Turn.new(player_spd, enemy_spd)
-
+	
+	print("woo")
 	if not turn.is_player():
 		enemy_execution()
 	else:
@@ -46,10 +81,12 @@ func initiate_combat() -> void:
 # Connect this function to signal emmitted by UI (When player inputs to change pokemon)
 func change_pokemon(p_pokemon_name: String):
 	combat_state.change_player(p_pokemon_name)
+	await get_tree().create_timer(1.0).timeout
 
 # UI-SYSTEM should send their moves via this function
 func player_execution(move_slot: PokemonInstance.MoveSlot):
 	execute_turn(move_slot)
+	enemy_execution()
 
 func execute_turn(move_slot: PokemonInstance.MoveSlot):
 	var move = move_slot.move_data
@@ -97,8 +134,9 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot):
 
 func enemy_execution() -> void:
 	# Basic Enemy
+	await get_tree().create_timer(1.0).timeout
 	var hp = combat_state.get_stat_current(false, ALIAS.HP)
-	var curr_hp = combat_state.get_stat_current(false, ALIAS.CURRHP)
+	var curr_hp = combat_state.get_attacker(false).current_hp
 
 	var heal_move_names = ["Recover", "Roost", "Giga Drain", "Absorb"]
 
@@ -118,7 +156,10 @@ func enemy_execution() -> void:
 	var rand_attack = randi() % atk_move_slots.size()
 	if heal_move_slots.size() == 0 || curr_hp > thresh * hp:
 		execute_turn(atk_move_slots[rand_attack])
+		execute_player_turn.emit()
 		return
 
 	var rand_heal = randi() % heal_move_slots.size()
 	execute_turn(heal_move_slots[rand_heal])
+	
+	execute_player_turn.emit()

@@ -136,4 +136,5 @@ func update_player_items():
 
 func player_turn_start() -> void:
 	menu_walk_string = ""
+	print("Player turn")
 	draw_action_menu()

@@ -7,7 +7,10 @@
 
 [node name="CombatScene" type="Node2D"]
 
-[node name="CombatPlayerUI" parent="." instance=ExtResource("1_7uj85")]
+[node name="CombatManager" parent="." node_paths=PackedStringArray("combat_ui", "player", "enemy") instance=ExtResource("4_loea4")]
+combat_ui = NodePath("../CombatPlayerUI")
+player = NodePath("../PlayerCharacter")
+enemy = NodePath("../EnemyCharacter")
 
 [node name="PlayerCharacter" parent="." instance=ExtResource("2_2ip8y")]
 position = Vector2(200, 500)
@@ -17,16 +20,13 @@ scale = Vector2(6, 6)
 position = Vector2(900, 200)
 scale = Vector2(6, 6)
 
-[node name="CombatManager" parent="." instance=ExtResource("4_loea4")]
+[node name="CombatPlayerUI" parent="." instance=ExtResource("1_7uj85")]
 
-[connection signal="change_to_pokemon" from="CombatPlayerUI" to="CombatManager" method="change_pokemon"]
-[connection signal="combat_start" from="CombatPlayerUI" to="CombatManager" method="initiate_combat"]
-[connection signal="move_to_use" from="CombatPlayerUI" to="CombatManager" method="player_execution"]
-[connection signal="active_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="update_player_moves"]
-[connection signal="all_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="update_player_pokemon"]
 [connection signal="battle_log_choser_added" from="CombatManager" to="CombatPlayerUI" method="update_log"]
 [connection signal="battle_log_critical_added" from="CombatManager" to="CombatPlayerUI" method="update_log"]
 [connection signal="battle_log_damage_added" from="CombatManager" to="CombatPlayerUI" method="update_log"]
 [connection signal="battle_log_heal_added" from="CombatManager" to="CombatPlayerUI" method="update_log"]
 [connection signal="battle_log_miss_added" from="CombatManager" to="CombatPlayerUI" method="update_log"]
 [connection signal="execute_player_turn" from="CombatManager" to="CombatPlayerUI" method="player_turn_start"]
+[connection signal="active_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="update_player_moves"]
+[connection signal="all_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="update_player_pokemon"]
