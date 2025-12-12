@@ -36,7 +36,6 @@ func _ready() -> void:
 # Function to draw and update action menu UI as per user 
 func draw_action_menu():
 	var menu_walk = menu_walk_string.split("/")
-	print(menu_walk)
 	var action_list = player_actions
 	
 	for action in menu_walk:
@@ -48,27 +47,28 @@ func draw_action_menu():
 		# Player has taken action after going to the last node
 		var action_type = type_string(typeof(action_list[action]))
 		if (action_type == "int"):
-			menu_walk_string = ""
 			action_list = {}
-			
-			if ("Moves" in menu_walk):
-				move_to_use.emit(move_dict[action])
-			elif ("Items" in menu_walk):
-				item_to_use.emit(action)
-			else:
-				change_to_pokemon.emit(action)
+			signal_action_by_player(menu_walk, action)
 			break
 
 		action_list = action_list[action]
 
 	action_menu.create_menu(action_list, Vector2(250,40))
 
+func signal_action_by_player(menu_walk, action):
+	if ("Moves" in menu_walk):
+		assert(action in move_dict)
+		move_to_use.emit(move_dict[action])
+	elif ("Items" in menu_walk):
+		item_to_use.emit(action)
+	else:
+		change_to_pokemon.emit(action)
+
 func update_action(action):
 	if (action == "Back"):
 		var menu_walk = menu_walk_string.split("/")
 		menu_walk.remove_at(menu_walk.size() - 1)
 		menu_walk_string = "/".join(menu_walk)
-		
 	else:
 		menu_walk_string += ("/" + action)
 	draw_action_menu()
@@ -105,7 +105,7 @@ func load_file_contents(file_path : String) -> String:
 
 	return file_string
 
-# Functions which update
+# Functions which update the actions a player can take
 func update_player_moves(pokemon: PokemonInstance) -> void:
 	player_actions["Moves"] = {}
 	move_dict = {}
@@ -131,9 +131,9 @@ func update_player_items():
 		if (items[item] != 0):
 			player_actions["Items"][item] = int(items[item])
 	player_actions["Items"]["Back"] = 0
-	
 
 # Function to display combat UI on player turn
 
 func player_turn_start() -> void:
+	menu_walk_string = ""
 	draw_action_menu()
