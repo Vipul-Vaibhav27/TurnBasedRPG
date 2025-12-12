@@ -36,7 +36,7 @@ func initalise_dummy_values() -> void:
 	var SPECIES_2 = PokemonSpecies.new()
 	SPECIES_2.name = "Charmander"
 	SPECIES_2.types.assign([TypeChart.Type.FIRE, TypeChart.Type.DRAGON])
-	var POKEMON_2 = PokemonInstance.new(SPECIES_1, 2)
+	var POKEMON_2 = PokemonInstance.new(SPECIES_2, 2)
 	var MOVE_3 = Move.new()
 	var MOVE_4 = Move.new()
 	MOVE_3.name = "m3"
