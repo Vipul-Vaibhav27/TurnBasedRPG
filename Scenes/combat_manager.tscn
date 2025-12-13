@@ -9,6 +9,8 @@ script = ExtResource("1_5ncfv")
 
 [node name="DeathSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_5ncfv")
+bus = &"SFX"
 
 [node name="HitSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_e8jms")
+bus = &"SFX"

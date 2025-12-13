@@ -3,6 +3,8 @@ extends Control
 @onready var action_menu = $Menu
 @onready var battle_log = $CombatLog
 @onready var select_sfx = $SelectSFX
+@onready var result_display = $Label
+@onready var result_sfx = $ResultSFX
 
 var player_actions = {
 	"Change" : {},
@@ -23,6 +25,7 @@ signal change_to_pokemon(new_pokemon)
 signal move_to_use(move)
 
 signal combat_start
+signal combat_end
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -58,7 +61,8 @@ func draw_action_menu():
 
 		action_list = action_list[action]
 
-	action_menu.create_menu(action_list, Vector2(250,40))
+	if (action_menu != null):
+		action_menu.create_menu(action_list, Vector2(250,40))
 
 func signal_action_by_player(menu_walk, action):
 	if ("Moves" in menu_walk):
@@ -108,10 +112,18 @@ func update_player_moves() -> void:
 func update_player_pokemon() -> void:
 	player_actions["Change"] = {}
 	for pokemon in pokemon_instances:
-
 		if (pokemon_instances[pokemon].current_hp <= 0):
 			continue
 		player_actions["Change"][pokemon] = 0
+		
+	if (len(player_actions["Change"]) == 0):
+		# No pokemon left - Player defeated
+		action_menu.queue_free()
+		result_display.text = "DEFEAT"
+		result_sfx.play()
+		combat_end.emit()
+		
+
 	player_actions["Change"]["Back"] = 0
 
 func update_player_items():
