@@ -4,9 +4,9 @@ extends Control
 @onready var battle_log = $CombatLog
 
 var player_actions = {
-	"Moves" : {},
 	"Change" : {},
 	"Items" : {},
+	"Moves" : {},
 }
 
 var move_dict = {}
@@ -63,6 +63,7 @@ func signal_action_by_player(menu_walk, action):
 		assert(action in move_dict)
 		move_to_use.emit(move_dict[action])
 	elif ("Items" in menu_walk):
+		player_actions["Items"]["Turn Pass"] -= 1
 		item_to_use.emit(action)
 	else:
 		change_to_pokemon.emit(action)
