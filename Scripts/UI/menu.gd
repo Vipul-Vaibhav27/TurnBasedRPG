@@ -25,7 +25,11 @@ func create_menu(items : Variant, item_size : Vector2) -> void:
 		menu_container.add_child(item_button)
 		
 		if (item_button.has_method("update_text")):
+			var item_data_type = type_string(typeof(items[item]))
+			if (item_data_type == "int" and items[item] != 0):
+				item_button.update_num_items(items[item])
 			item_button.update_text(item)
+
 		else:
 			printerr("No method to update text")
 

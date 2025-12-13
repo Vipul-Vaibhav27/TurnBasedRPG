@@ -45,8 +45,8 @@ func draw_action_menu():
 		assert(action in action_list)
 
 		# Player has taken action after going to the last node
-		var action_type = type_string(typeof(action_list[action]))
-		if (action_type == "int"):
+		var action_data_type = type_string(typeof(action_list[action]))
+		if (action_data_type == "int"):
 			action_list = {}
 			signal_action_by_player(menu_walk, action)
 			break
@@ -78,7 +78,43 @@ func update_log(text : String):
 	battle_log.text += text
 	battle_log.text += '\n'
 
-# Functions for loading and parsing jsons
+# Functions which update the actions a player can take
+func update_player_moves(pokemon: PokemonInstance) -> void:
+	player_actions["Moves"] = {}
+	move_dict = {}
+	
+	for move in pokemon.active_moves:
+		if (move.current_pp != 0): # If no more moves exist, don't show them
+			player_actions["Moves"][move.move_data.name] = move.current_pp
+			move_dict[move.move_data.name] = move
+	player_actions["Moves"]["Back"] = 0
+
+func update_player_pokemon(pokemon_instances: Variant) -> void:
+	player_actions["Change"] = {}
+	for pokemon in pokemon_instances:
+		player_actions["Change"][pokemon] = 0
+	player_actions["Change"]["Back"] = 0
+
+func update_player_items():
+	# Items carried by player
+	var items = {
+		"Turn Pass" : 40,
+	}
+	
+	player_actions["Items"] = {}
+	for item in items:
+		if (items[item] != 0):
+			player_actions["Items"][item] = int(items[item])
+	player_actions["Items"]["Back"] = 0
+
+# Function to display combat UI on player turn
+
+func player_turn_start() -> void:
+	menu_walk_string = ""
+	print("Player turn")
+	draw_action_menu()
+
+# Functions for loading and parsing jsons - unused
 
 func load_parse_json(file_path : String) -> Variant:
 	var json_string = load_file_contents(file_path)
@@ -105,37 +141,3 @@ func load_file_contents(file_path : String) -> String:
 		file.close()
 
 	return file_string
-
-# Functions which update the actions a player can take
-func update_player_moves(pokemon: PokemonInstance) -> void:
-	player_actions["Moves"] = {}
-	move_dict = {}
-	
-	for move in pokemon.active_moves:
-		if (move.current_pp != 0): # If no more moves exist, don't show them
-			player_actions["Moves"][move.move_data.name] = move.current_pp
-			move_dict[move.move_data.name] = move
-	player_actions["Moves"]["Back"] = 0
-
-func update_player_pokemon(pokemon_instances: Variant) -> void:
-	player_actions["Change"] = {}
-	for pokemon in pokemon_instances:
-		player_actions["Change"][pokemon] = 0
-	player_actions["Change"]["Back"] = 0
-
-func update_player_items():
-	# Items carried by player
-	var item_file_path = "res://Data/player_items.json"
-	var items = load_parse_json(item_file_path)["Items"]
-	player_actions["Items"] = {}
-	for item in items:
-		if (items[item] != 0):
-			player_actions["Items"][item] = int(items[item])
-	player_actions["Items"]["Back"] = 0
-
-# Function to display combat UI on player turn
-
-func player_turn_start() -> void:
-	menu_walk_string = ""
-	print("Player turn")
-	draw_action_menu()
