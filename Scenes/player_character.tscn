@@ -598,7 +598,8 @@ visible = false
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_8nd5c")
 animation = &"idle"
-frame_progress = 0.632749
+frame = 22
+frame_progress = 0.1773929
 
 [node name="PlayerHealthBar" parent="." instance=ExtResource("3_o0f8b")]
 offset_left = -20.0
@@ -612,4 +613,5 @@ visible = false
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_dgvd7")
 animation = &"idle"
-frame_progress = 0.75270987
+frame = 31
+frame_progress = 0.4054649

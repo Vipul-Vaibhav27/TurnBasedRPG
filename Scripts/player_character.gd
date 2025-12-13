@@ -35,6 +35,13 @@ func change_active_pokemon(new_pokemon : PokemonInstance) -> void:
 	update_hp()
 	active_player_pokemon.emit(active_pokemon)
 
+# A rudimentary damage animation
+func take_damage():
+	for i in range(4):
+		anim_nodes[active_pokemon.species.name].visible = not anim_nodes[active_pokemon.species.name].visible
+		await get_tree().create_timer(0.25).timeout
+
+
 func update_hp():
 	var curr_hp = active_pokemon.current_hp
 	var max_hp = active_pokemon.current_stats[ALIAS.HP]

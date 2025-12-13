@@ -26,6 +26,9 @@ signal execute_enemy_turn
 
 signal victory_signal
 
+signal player_hit
+signal enemy_hit
+
 class Turn:
 
 	var curr_turn = null # 0 for player, 1 for enemy
@@ -133,7 +136,8 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot) -> bool:
 		turn.next()
 		return false
 
-	hit_sfx.play() # Play hit sound if move hits enemy
+	hit_sfx.play() # Play hit sound if move hits enemy	
+	
 	# --- HANDLE Attacks (Physical/Special) ---
 	var damage = DamageCalculator.calculate(attacker, defender, move, battle_log_critical_added)
 	combat_state.take_damage(is_player, damage)
@@ -159,6 +163,13 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot) -> bool:
 			#await get_tree().create_timer(2.0).timeout
 			player_death.emit()
 			player_dead = true
+	else:
+		# No death - show hit animation
+		if (is_player):
+			enemy_hit.emit()
+		else:
+			player_hit.emit()
+		#await get_tree().create_timer(1).timeout
 	
 	turn.next()
 	return player_dead
