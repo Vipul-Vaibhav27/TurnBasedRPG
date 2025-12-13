@@ -2,6 +2,7 @@ extends Control
 
 @onready var action_menu = $Menu
 @onready var battle_log = $CombatLog
+@onready var select_sfx = $SelectSFX
 
 var player_actions = {
 	"Change" : {},
@@ -76,6 +77,7 @@ func update_action(action):
 		menu_walk_string = "/".join(menu_walk)
 	else:
 		menu_walk_string += ("/" + action)
+	select_sfx.play()
 	draw_action_menu()
 
 # Function for updating battle log
