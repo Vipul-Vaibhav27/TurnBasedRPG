@@ -1,6 +1,8 @@
 extends Node2D
 
 @onready var hp_bar = $PlayerHealthBar
+@export var bulbasaur: AnimatedSprite2D
+@export var charmander: AnimatedSprite2D
 
 var player_pokemon_instances = {}
 var active_pokemon: PokemonInstance
@@ -9,17 +11,27 @@ signal all_player_pokemon(pokemon_instances)
 signal all_player_pokemon_manager(pokemon_instances, active_name)
 signal active_player_pokemon(pokemon)
 
+var anim_nodes: Dictionary[String, AnimatedSprite2D]
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	anim_nodes["Bulbasaur"] = bulbasaur
+	anim_nodes["Charmander"] = charmander
 	initalise_dummy_values()
 	# Reciever combat manager for getting all pokemon
+	anim_nodes[active_pokemon.species.name].visible = true
+	anim_nodes[active_pokemon.species.name].play()
 	all_player_pokemon.emit(player_pokemon_instances)
 	all_player_pokemon_manager.emit(player_pokemon_instances, active_pokemon.species.name)
 	# Reciever UI so that it knows pokemon moves
 	active_player_pokemon.emit(active_pokemon)
 
 func change_active_pokemon(new_pokemon : PokemonInstance) -> void:
+	anim_nodes[active_pokemon.species.name].visible = false
+	anim_nodes[active_pokemon.species.name].pause()
 	active_pokemon = new_pokemon
+	anim_nodes[active_pokemon.species.name].visible = true
+	anim_nodes[active_pokemon.species.name].play()
 	update_hp()
 	active_player_pokemon.emit(active_pokemon)
 
