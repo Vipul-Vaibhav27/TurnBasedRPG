@@ -28,7 +28,6 @@ func update_hp():
 	var max_hp = active_pokemon.species.base_stats[ALIAS.HP]
 	if (hp_bar == null):
 		return
-	print("ENEMY: ", curr_hp, " ", max_hp)
 	hp_bar.update_hp(curr_hp, max_hp)
 
 func initalise_dummy_values() -> void:	
