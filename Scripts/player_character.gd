@@ -18,7 +18,6 @@ func _ready() -> void:
 	all_player_pokemon_manager.emit(player_pokemon_instances, active_pokemon.species.name)
 	# Reciever UI so that it knows pokemon moves
 	active_player_pokemon.emit(active_pokemon)
-	
 
 func change_active_pokemon(new_pokemon : PokemonInstance) -> void:
 	active_pokemon = new_pokemon
@@ -31,10 +30,7 @@ func update_hp():
 	hp_bar.update_hp(curr_hp, max_hp)
 
 func pokemon_dead(pokemon_name : String):
-	player_pokemon_instances[pokemon_name] = null
-	all_player_pokemon.emit(player_pokemon_instances)
 	signal_death_to_ui.emit()
-	
 
 func initalise_dummy_values() -> void:	
 	var SPECIES_1 = PokemonSpecies.new()

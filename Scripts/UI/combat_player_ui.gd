@@ -96,7 +96,7 @@ func update_player_moves(pokemon: PokemonInstance) -> void:
 func update_player_pokemon(pokemon_instances: Variant) -> void:
 	player_actions["Change"] = {}
 	for pokemon in pokemon_instances:
-		if (pokemon_instances[pokemon] == null):
+		if (pokemon_instances[pokemon].curr_hp < 0):
 			continue
 		player_actions["Change"][pokemon] = 0
 	player_actions["Change"]["Back"] = 0
