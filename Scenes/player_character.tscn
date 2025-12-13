@@ -603,9 +603,9 @@ frame_progress = 0.1773929
 
 [node name="PlayerHealthBar" parent="." instance=ExtResource("3_o0f8b")]
 offset_left = -20.0
-offset_top = 15.0
+offset_top = -25.0
 offset_right = -20.0
-offset_bottom = 15.0
+offset_bottom = -25.0
 scale = Vector2(0.6, 0.6)
 
 [node name="Charmander" type="AnimatedSprite2D" parent="."]
