@@ -24,6 +24,8 @@ signal player_death
 signal enemy_death
 signal execute_enemy_turn
 
+signal victory_signal
+
 class Turn:
 
 	var curr_turn = null # 0 for player, 1 for enemy
@@ -163,11 +165,15 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot) -> bool:
 
 func change_enemy() -> void:
 	combat_state.enemy.erase(combat_state.curr_enemy)
-	assert(combat_state.enemy.size() != 0, "Player won!")
-	var pokes = combat_state.enemy.keys()
-	combat_state.curr_enemy = pokes[randi() % pokes.size()]
-	enemy.change_active_pokemon(combat_state.enemy[combat_state.curr_enemy])
-	battle_log_choser_added.emit("Enemy chose " + combat_state.curr_enemy + ".")
+	
+	if combat_state.enemy.size() == 0:
+		victory_signal.emit()
+		combat_state.curr_enemy = ""
+	else:
+		var pokes = combat_state.enemy.keys()
+		combat_state.curr_enemy = pokes[randi() % pokes.size()]
+		enemy.change_active_pokemon(combat_state.enemy[combat_state.curr_enemy])
+		battle_log_choser_added.emit("Enemy chose " + combat_state.curr_enemy + ".")
 
 func enemy_execution() -> void:
 	# Basic Enemy
@@ -193,11 +199,12 @@ func enemy_execution() -> void:
 
 	var rand_attack = randi() % atk_move_slots.size()
 	if heal_move_slots.size() == 0 || curr_hp > thresh * hp:
-		if !execute_turn(atk_move_slots[rand_attack]):
+		if !execute_turn(atk_move_slots[rand_attack]) && combat_state.curr_enemy != "":
 			execute_player_turn.emit()
 		return
 
 	var rand_heal = randi() % heal_move_slots.size()
 	execute_turn(heal_move_slots[rand_heal])
 	
-	execute_player_turn.emit()
+	if combat_state.curr_enemy != "":
+		execute_player_turn.emit()

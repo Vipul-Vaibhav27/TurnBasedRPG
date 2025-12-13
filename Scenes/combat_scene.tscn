@@ -27,7 +27,6 @@ scale = Vector2(6, 6)
 [node name="BGM" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_2ip8y")
 autoplay = true
-bus = &"Music"
 script = ExtResource("6_vtehv")
 
 [connection signal="battle_log_choser_added" from="CombatManager" to="CombatPlayerUI" method="update_log"]
