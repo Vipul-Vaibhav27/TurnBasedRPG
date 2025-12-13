@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cf11t36eqnirk"]
+[gd_scene load_steps=13 format=3 uid="uid://cf11t36eqnirk"]
 
 [ext_resource type="Script" uid="uid://75a7pmwur4o5" path="res://Scripts/player_character.gd" id="1_qcwfp"]
 [ext_resource type="Texture2D" uid="uid://cfpxdj6it7bu5" path="res://Assets/Art/eyeball spritesheet.png" id="2_cmdk4"]
+[ext_resource type="PackedScene" uid="uid://6r3lyshak55c" path="res://Scenes/UI/health_bar.tscn" id="3_o0f8b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o0f8b"]
 atlas = ExtResource("2_cmdk4")
@@ -75,3 +76,9 @@ sprite_frames = SubResource("SpriteFrames_w775p")
 animation = &"Idle"
 frame_progress = 0.02909856
 flip_h = true
+
+[node name="PlayerHealthBar" parent="." instance=ExtResource("3_o0f8b")]
+offset_left = 209.16296
+offset_top = -125.97966
+offset_right = 209.16296
+offset_bottom = -125.97966

@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://crmeup0pjy7wf"]
+[gd_scene load_steps=11 format=3 uid="uid://crmeup0pjy7wf"]
 
 [ext_resource type="Script" uid="uid://ce135hhera764" path="res://Scripts/enemy_character.gd" id="1_kxb12"]
 [ext_resource type="Texture2D" uid="uid://yxkxoos47v6u" path="res://Assets/Art/worm spritesheet.png" id="2_2u673"]
+[ext_resource type="PackedScene" uid="uid://6r3lyshak55c" path="res://Scenes/UI/health_bar.tscn" id="3_qev2r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qev2r"]
 atlas = ExtResource("2_2u673")
@@ -61,3 +62,5 @@ sprite_frames = SubResource("SpriteFrames_nsn3q")
 animation = &"bite"
 frame_progress = 0.4719273
 flip_h = true
+
+[node name="EnemyHealthBar" parent="." instance=ExtResource("3_qev2r")]
