@@ -129,6 +129,8 @@ func update_player_items():
 func player_turn_start() -> void:
 	menu_walk_string = ""
 	print("Player turn")
+	if (not player_actions.has("Items")):
+		update_player_items()
 	update_player_moves()
 	draw_action_menu()
 
