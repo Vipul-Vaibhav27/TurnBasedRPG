@@ -14,6 +14,7 @@ var move_dict = {}
 var menu_walk_string = ""
 
 var pokemon_instances
+var active_pokemon
 
 
 signal item_to_use(item)
@@ -82,20 +83,26 @@ func update_log(text : String):
 	battle_log.text += text
 	battle_log.text += '\n'
 
-# Functions which update the actions a player can take
-func update_player_moves(pokemon: PokemonInstance) -> void:
-	player_actions["Moves"] = {}
-	move_dict = {}
+# Functions for initialising and updating pokemon instances and active pokemon
+func update_active_pokemon(pokemon : PokemonInstance) -> void:
+	active_pokemon = pokemon
+	update_player_moves()
 
-	for move in pokemon.active_moves:
-		if (move.current_pp != 0): # If no more moves exist, don't show them
-			player_actions["Moves"][move.move_data.name] = move.current_pp
-			move_dict[move.move_data.name] = move
-	player_actions["Moves"]["Back"] = 0
 
 func initialise_pokemon_instances(pokemons : Variant) -> void:
 	pokemon_instances = pokemons
 	update_player_pokemon()
+
+# Functions which update the actions a player can take
+func update_player_moves() -> void:
+	player_actions["Moves"] = {}
+	move_dict = {}
+
+	for move in active_pokemon.active_moves:
+		if (move.current_pp != 0): # If no more moves exist, don't show them
+			player_actions["Moves"][move.move_data.name] = move.current_pp
+			move_dict[move.move_data.name] = move
+	player_actions["Moves"]["Back"] = 0
 
 func update_player_pokemon() -> void:
 	player_actions["Change"] = {}
@@ -123,7 +130,7 @@ func update_player_items():
 func player_turn_start() -> void:
 	menu_walk_string = ""
 	print("Player turn")
-
+	update_player_moves()
 	draw_action_menu()
 
 # Function to change pokemon after death
