@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cwqowh0kgiels"]
+[gd_scene load_steps=5 format=3 uid="uid://cwqowh0kgiels"]
 
 [ext_resource type="Script" uid="uid://b7om2txfc3aot" path="res://Scripts/UI/combat_player_ui.gd" id="1_hh3pv"]
 [ext_resource type="PackedScene" uid="uid://doy8kprqpmuyy" path="res://Scenes/UI/menu.tscn" id="2_yihqj"]
+[ext_resource type="AudioStream" uid="uid://pj4lgbk6w0kx" path="res://Assets/SFX/menu_select.wav" id="3_yihqj"]
+[ext_resource type="AudioStream" uid="uid://dvv6nma28x1ta" path="res://Assets/SFX/Result.wav" id="4_30bff"]
 
 [node name="CombatPlayerUI" type="Control"]
 layout_mode = 3
@@ -19,3 +21,22 @@ wrap_mode = 1
 layout_mode = 0
 offset_top = 150.0
 offset_bottom = 150.0
+
+[node name="SelectSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_yihqj")
+volume_db = -15.0
+bus = &"SFX"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 300.0
+offset_right = 670.0
+offset_bottom = 340.0
+theme_override_font_sizes/font_size = 24
+text = "HERE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResultSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_30bff")

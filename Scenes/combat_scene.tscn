@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://t3vnm1lbpphd"]
+[gd_scene load_steps=7 format=3 uid="uid://t3vnm1lbpphd"]
 
 [ext_resource type="PackedScene" uid="uid://cwqowh0kgiels" path="res://Scenes/UI/combat_player_ui.tscn" id="1_7uj85"]
 [ext_resource type="PackedScene" uid="uid://cf11t36eqnirk" path="res://Scenes/player_character.tscn" id="2_2ip8y"]
 [ext_resource type="PackedScene" uid="uid://crmeup0pjy7wf" path="res://Scenes/enemy_character.tscn" id="3_vtehv"]
 [ext_resource type="PackedScene" uid="uid://dxvjktdaf834m" path="res://Scenes/combat_manager.tscn" id="4_loea4"]
+[ext_resource type="AudioStream" uid="uid://cc22l71itp88t" path="res://Assets/Music/battle_bgm.mp3" id="5_2ip8y"]
+[ext_resource type="Script" uid="uid://1a01b2vud68f" path="res://Scripts/Music/bgm.gd" id="6_vtehv"]
 
 [node name="CombatScene" type="Node2D"]
 
@@ -22,6 +24,12 @@ scale = Vector2(6, 6)
 
 [node name="CombatPlayerUI" parent="." instance=ExtResource("1_7uj85")]
 
+[node name="BGM" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_2ip8y")
+autoplay = true
+bus = &"Music"
+script = ExtResource("6_vtehv")
+
 [connection signal="battle_log_choser_added" from="CombatManager" to="CombatPlayerUI" method="update_log"]
 [connection signal="battle_log_critical_added" from="CombatManager" to="CombatPlayerUI" method="update_log"]
 [connection signal="battle_log_damage_added" from="CombatManager" to="CombatPlayerUI" method="update_log"]
@@ -35,4 +43,5 @@ scale = Vector2(6, 6)
 [connection signal="player_death" from="CombatManager" to="CombatPlayerUI" method="player_pokemon_death"]
 [connection signal="active_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="update_active_pokemon"]
 [connection signal="all_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="initialise_pokemon_instances"]
+[connection signal="combat_end" from="CombatPlayerUI" to="BGM" method="_on_combat_player_ui_combat_end"]
 [connection signal="item_to_use" from="CombatPlayerUI" to="CombatManager" method="use_item"]
