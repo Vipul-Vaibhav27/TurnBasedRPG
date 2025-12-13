@@ -27,6 +27,8 @@ signal move_to_use(move)
 signal combat_start
 signal combat_end
 
+signal update_hp_on_pokemon_death
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	update_player_items()
@@ -40,6 +42,7 @@ func _ready() -> void:
 		printerr("Combat UI: No signal to notify menu item picked")
 		
 	combat_start.emit()
+	result_display.text = ""
 
 # Function to draw and update action menu UI as per user 
 func draw_action_menu():
@@ -155,6 +158,7 @@ func player_pokemon_death() -> void:
 	update_player_pokemon()
 	player_actions.erase("Items")
 	player_actions.erase("Moves")
+	update_hp_on_pokemon_death.emit()
 	draw_action_menu()
 
 func player_victory() -> void:
