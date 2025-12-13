@@ -17,6 +17,8 @@ signal battle_log_damage_added(log: String)	 # It dealt 12 damage to Charmander.
 signal battle_log_heal_added(log: String) # Charmander healed 15 damage.
 
 signal execute_player_turn
+signal player_death
+signal enemy_death
 
 class Turn:
 	var curr_turn = null # 0 for player, 1 for enemy
@@ -68,21 +70,23 @@ func initiate_combat() -> void:
 	var enemy_spd = combat_state.get_stat_current(true, ALIAS.SPD)
 	turn = Turn.new(player_spd, enemy_spd)
 	
-	print("woo")
+	battle_log_choser_added.emit("Player chose " + combat_state.curr_player + ".")
+	battle_log_choser_added.emit("Enemy chose " + combat_state.curr_enemy + ".")
 	if not turn.is_player():
 		enemy_execution()
 	else:
 		execute_player_turn.emit()
 
-# Connect this function to signal emmitted by UI (When player inputs to change pokemon)
 func change_pokemon(p_pokemon_name: String):
 	turn.next()
 	combat_state.change_player(p_pokemon_name)
 	player.change_active_pokemon(combat_state.player[p_pokemon_name])
-	print(combat_state.curr_player)
+	battle_log_choser_added.emit("Player chose " + combat_state.curr_player + ".")
 	enemy_execution()
 
-# UI-SYSTEM should send their moves via this function
+func check_death(poke: PokemonInstance) -> bool:
+	return poke.current_hp == 0
+
 func player_execution(move_slot: PokemonInstance.MoveSlot):
 	execute_turn(move_slot)
 	enemy_execution()
@@ -127,13 +131,31 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot):
 		var drain_amount = int(damage * move.heal_percent)
 		combat_state.heal(is_player, drain_amount)
 		battle_log_heal_added.emit(attacker.species.name + " healed " + str(drain_amount) + " damage.")
-
+	
 	move_slot.current_pp -= 1
+	if check_death(defender):
+		if is_player:
+			enemy_death.emit()
+			battle_log_critical_added.emit("Enemy's " + combat_state.curr_enemy + " is dead!")
+			await get_tree().create_timer(2.0).timeout
+			change_enemy()
+		else:
+			battle_log_critical_added.emit("Player's " + combat_state.curr_player + " is dead!")
+			await get_tree().create_timer(2.0).timeout
+			player_death.emit()
+	
 	turn.next()
+
+func change_enemy() -> void:
+	combat_state.enemy.erase(combat_state.curr_enemy)
+	assert(combat_state.enemy.size() != 0, "Player won!")
+	var pokes = combat_state.enemy.keys()
+	combat_state.curr_enemy = pokes[randi() % pokes.size()]
+	battle_log_choser_added.emit("Enemy chose " + combat_state.curr_enemy + ".")
 
 func enemy_execution() -> void:
 	# Basic Enemy
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(2.0).timeout
 	var hp = combat_state.get_stat_current(false, ALIAS.HP)
 	var curr_hp = combat_state.get_attacker(false).current_hp
 
