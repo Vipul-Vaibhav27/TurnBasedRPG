@@ -177,8 +177,8 @@ func change_enemy() -> void:
 
 func enemy_execution() -> void:
 	# Basic Enemy
-	await get_tree().create_timer(2.0).timeout
 	execute_enemy_turn.emit()
+	await get_tree().create_timer(2.0).timeout
 	var hp = combat_state.get_stat_current(false, ALIAS.HP)
 	var curr_hp = combat_state.get_attacker(false).current_hp
 
