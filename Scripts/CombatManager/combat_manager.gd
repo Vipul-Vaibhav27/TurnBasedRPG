@@ -9,6 +9,9 @@ var turn: Turn
 @export var enemy: Node2D
 var ready_count = 0
 
+@onready var hit_sfx = $HitSFX
+@onready var death_sfx = $DeathSFX
+
 # To separate different types of battle log
 signal battle_log_choser_added(log: String) # Charmander chose FireBall.
 signal battle_log_miss_added(log: String) # FireBall missed!
@@ -126,6 +129,7 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot) -> bool:
 		turn.next()
 		return false
 
+	hit_sfx.play() # Play hit sound if move hits enemy
 	# --- HANDLE Attacks (Physical/Special) ---
 	var damage = DamageCalculator.calculate(attacker, defender, move, battle_log_critical_added)
 	combat_state.take_damage(is_player, damage)
@@ -141,6 +145,7 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot) -> bool:
 	move_slot.current_pp -= 1
 	var player_dead = false
 	if check_death(defender):
+		death_sfx.play() # Play death sound if enemy dies
 		if is_player:
 			enemy_death.emit()
 			battle_log_critical_added.emit("Enemy's " + combat_state.curr_enemy + " is dead!")
