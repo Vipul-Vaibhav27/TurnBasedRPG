@@ -95,10 +95,9 @@ func check_death(poke: PokemonInstance) -> bool:
 
 func player_execution(move_slot: PokemonInstance.MoveSlot):
 	execute_turn(move_slot)
-	execute_enemy_turn.emit()
 	enemy_execution()
 
-func execute_turn(move_slot: PokemonInstance.MoveSlot):
+func execute_turn(move_slot: PokemonInstance.MoveSlot) -> bool:
 	var move = move_slot.move_data
 	var is_player = turn.is_player()
 
@@ -111,7 +110,7 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot):
 	if randi() % 100 > move.accuracy:
 		battle_log_miss_added.emit(move.name + " missed!");
 		turn.next()
-		return
+		return false
 
 	# --- HANDLE Status Moves ---
 	if move.category == Move.Category.STATUS:
@@ -121,11 +120,11 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot):
 			battle_log_heal_added.emit(attacker.name + " healed " + str(amount) + " damage.")
 			move_slot.current_pp -= 1
 			turn.next()
-			return
+			return false
 
 		# Handle other status moves
 		turn.next()
-		return
+		return false
 
 	# --- HANDLE Attacks (Physical/Special) ---
 	var damage = DamageCalculator.calculate(attacker, defender, move, battle_log_critical_added)
@@ -140,29 +139,33 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot):
 		battle_log_heal_added.emit(attacker.species.name + " healed " + str(drain_amount) + " damage.")
 	
 	move_slot.current_pp -= 1
+	var player_dead = false
 	if check_death(defender):
 		if is_player:
 			enemy_death.emit()
 			battle_log_critical_added.emit("Enemy's " + combat_state.curr_enemy + " is dead!")
-			await get_tree().create_timer(2.0).timeout
 			change_enemy()
 		else:
 			battle_log_critical_added.emit("Player's " + combat_state.curr_player + " is dead!")
 			#await get_tree().create_timer(2.0).timeout
 			player_death.emit()
+			player_dead = true
 	
 	turn.next()
+	return player_dead
 
 func change_enemy() -> void:
 	combat_state.enemy.erase(combat_state.curr_enemy)
 	assert(combat_state.enemy.size() != 0, "Player won!")
 	var pokes = combat_state.enemy.keys()
 	combat_state.curr_enemy = pokes[randi() % pokes.size()]
+	enemy.change_active_pokemon(combat_state.enemy[combat_state.curr_enemy])
 	battle_log_choser_added.emit("Enemy chose " + combat_state.curr_enemy + ".")
 
 func enemy_execution() -> void:
 	# Basic Enemy
 	await get_tree().create_timer(2.0).timeout
+	execute_enemy_turn.emit()
 	var hp = combat_state.get_stat_current(false, ALIAS.HP)
 	var curr_hp = combat_state.get_attacker(false).current_hp
 
@@ -183,8 +186,8 @@ func enemy_execution() -> void:
 
 	var rand_attack = randi() % atk_move_slots.size()
 	if heal_move_slots.size() == 0 || curr_hp > thresh * hp:
-		execute_turn(atk_move_slots[rand_attack])
-		execute_player_turn.emit()
+		if !execute_turn(atk_move_slots[rand_attack]):
+			execute_player_turn.emit()
 		return
 
 	var rand_heal = randi() % heal_move_slots.size()
