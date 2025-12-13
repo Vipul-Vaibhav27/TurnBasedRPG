@@ -64,3 +64,8 @@ frame_progress = 0.4719273
 flip_h = true
 
 [node name="EnemyHealthBar" parent="." instance=ExtResource("3_qev2r")]
+offset_left = -20.0
+offset_top = 15.0
+offset_right = -20.0
+offset_bottom = 15.0
+scale = Vector2(0.6, 0.6)

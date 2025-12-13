@@ -78,7 +78,8 @@ frame_progress = 0.02909856
 flip_h = true
 
 [node name="PlayerHealthBar" parent="." instance=ExtResource("3_o0f8b")]
-offset_left = 209.16296
-offset_top = -125.97966
-offset_right = 209.16296
-offset_bottom = -125.97966
+offset_left = -20.0
+offset_top = 15.0
+offset_right = -20.0
+offset_bottom = 15.0
+scale = Vector2(0.6, 0.6)
