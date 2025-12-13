@@ -54,6 +54,9 @@ func draw_action_menu():
 		action_list = action_list[action]
 
 	action_menu.create_menu(action_list, Vector2(250,40))
+	
+	if (not player_actions.has("Items")):
+		update_player_items()
 
 func signal_action_by_player(menu_walk, action):
 	if ("Moves" in menu_walk):
@@ -82,7 +85,7 @@ func update_log(text : String):
 func update_player_moves(pokemon: PokemonInstance) -> void:
 	player_actions["Moves"] = {}
 	move_dict = {}
-	
+
 	for move in pokemon.active_moves:
 		if (move.current_pp != 0): # If no more moves exist, don't show them
 			player_actions["Moves"][move.move_data.name] = move.current_pp
@@ -92,6 +95,8 @@ func update_player_moves(pokemon: PokemonInstance) -> void:
 func update_player_pokemon(pokemon_instances: Variant) -> void:
 	player_actions["Change"] = {}
 	for pokemon in pokemon_instances:
+		if (pokemon_instances[pokemon] == null):
+			continue
 		player_actions["Change"][pokemon] = 0
 	player_actions["Change"]["Back"] = 0
 
@@ -112,6 +117,12 @@ func update_player_items():
 func player_turn_start() -> void:
 	menu_walk_string = ""
 	print("Player turn")
+	draw_action_menu()
+
+# Function to change pokemon after death
+func player_pokemon_death() -> void:
+	player_actions.erase("Moves")
+	player_actions.erase("Items")
 	draw_action_menu()
 
 # Functions for loading and parsing jsons - unused

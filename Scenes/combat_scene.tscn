@@ -30,3 +30,4 @@ scale = Vector2(6, 6)
 [connection signal="execute_player_turn" from="CombatManager" to="CombatPlayerUI" method="player_turn_start"]
 [connection signal="active_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="update_player_moves"]
 [connection signal="all_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="update_player_pokemon"]
+[connection signal="signal_death_to_ui" from="PlayerCharacter" to="CombatPlayerUI" method="player_pokemon_death"]
