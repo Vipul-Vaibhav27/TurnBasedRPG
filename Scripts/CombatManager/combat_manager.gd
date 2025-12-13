@@ -66,6 +66,8 @@ func initiate_combat() -> void:
 	
 	print(combat_state.curr_player)
 	print(combat_state.player)
+	print(combat_state.player[combat_state.curr_player].current_hp)
+	print(combat_state.get_stat_current(true, ALIAS.HP))
 	
 	var player_spd = combat_state.get_stat_current(true, ALIAS.SPD)
 	var enemy_spd = combat_state.get_stat_current(true, ALIAS.SPD)
