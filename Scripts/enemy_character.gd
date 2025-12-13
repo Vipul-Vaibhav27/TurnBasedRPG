@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var hp_bar = $PlayerHealthBar
+@onready var hp_bar = $EnemyHealthBar
 
 var enemy_pokemon_instances = {}
 var active_pokemon: PokemonInstance
@@ -26,6 +26,9 @@ func change_active_pokemon(new_pokemon : PokemonInstance) -> void:
 func update_hp():
 	var curr_hp = active_pokemon.current_hp
 	var max_hp = active_pokemon.species.base_stats[ALIAS.HP]
+	if (hp_bar == null):
+		return
+	print("ENEMY: ", curr_hp, " ", max_hp)
 	hp_bar.update_hp(curr_hp, max_hp)
 
 func initalise_dummy_values() -> void:	

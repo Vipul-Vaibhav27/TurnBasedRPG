@@ -96,7 +96,7 @@ func update_player_moves(pokemon: PokemonInstance) -> void:
 func update_player_pokemon(pokemon_instances: Variant) -> void:
 	player_actions["Change"] = {}
 	for pokemon in pokemon_instances:
-		if (pokemon_instances[pokemon].curr_hp < 0):
+		if (pokemon_instances[pokemon].current_hp < 0):
 			continue
 		player_actions["Change"][pokemon] = 0
 	player_actions["Change"]["Back"] = 0
@@ -118,6 +118,7 @@ func update_player_items():
 func player_turn_start() -> void:
 	menu_walk_string = ""
 	print("Player turn")
+
 	draw_action_menu()
 
 # Function to change pokemon after death

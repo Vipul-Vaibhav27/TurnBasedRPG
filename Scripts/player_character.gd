@@ -27,6 +27,9 @@ func change_active_pokemon(new_pokemon : PokemonInstance) -> void:
 func update_hp():
 	var curr_hp = active_pokemon.current_hp
 	var max_hp = active_pokemon.species.base_stats[ALIAS.HP]
+	if (hp_bar == null):
+		return
+	print("Player: ", curr_hp, " ", max_hp)
 	hp_bar.update_hp(curr_hp, max_hp)
 
 func pokemon_dead(pokemon_name : String):

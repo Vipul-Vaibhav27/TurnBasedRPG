@@ -19,8 +19,10 @@ signal battle_log_heal_added(log: String) # Charmander healed 15 damage.
 signal execute_player_turn
 signal player_death
 signal enemy_death
+signal execute_enemy_turn
 
 class Turn:
+
 	var curr_turn = null # 0 for player, 1 for enemy
 	func _init(player_spd: int, enemy_spd: int) -> void:
 		curr_turn = 0 if player_spd >= enemy_spd else 1
@@ -50,7 +52,6 @@ func get_player_pokes(pokemon_instances, active_name):
 	combat_state.curr_player = active_name
 	combat_state.player = pokemon_instances
 	check_ready()
-	
 
 func get_enemy_pokes(pokemon_instances, active_name):
 	combat_state.curr_enemy = active_name
@@ -89,6 +90,7 @@ func check_death(poke: PokemonInstance) -> bool:
 
 func player_execution(move_slot: PokemonInstance.MoveSlot):
 	execute_turn(move_slot)
+	execute_enemy_turn.emit()
 	enemy_execution()
 
 func execute_turn(move_slot: PokemonInstance.MoveSlot):
