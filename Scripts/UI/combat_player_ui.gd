@@ -157,6 +157,12 @@ func player_pokemon_death() -> void:
 	player_actions.erase("Moves")
 	draw_action_menu()
 
+func player_victory() -> void:
+	action_menu.queue_free()
+	result_display.text = "VICTORY"
+	result_sfx.play()
+	combat_end.emit()
+
 # Functions for loading and parsing jsons - unused
 
 func load_parse_json(file_path : String) -> Variant:

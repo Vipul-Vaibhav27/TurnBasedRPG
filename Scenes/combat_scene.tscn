@@ -40,6 +40,7 @@ script = ExtResource("6_vtehv")
 [connection signal="execute_player_turn" from="CombatManager" to="EnemyCharacter" method="update_hp"]
 [connection signal="execute_player_turn" from="CombatManager" to="CombatPlayerUI" method="player_turn_start"]
 [connection signal="player_death" from="CombatManager" to="CombatPlayerUI" method="player_pokemon_death"]
+[connection signal="victory_signal" from="CombatManager" to="CombatPlayerUI" method="player_victory"]
 [connection signal="active_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="update_active_pokemon"]
 [connection signal="all_player_pokemon" from="PlayerCharacter" to="CombatPlayerUI" method="initialise_pokemon_instances"]
 [connection signal="combat_end" from="CombatPlayerUI" to="BGM" method="_on_combat_player_ui_combat_end"]
