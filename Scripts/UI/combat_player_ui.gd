@@ -88,7 +88,6 @@ func update_active_pokemon(pokemon : PokemonInstance) -> void:
 	active_pokemon = pokemon
 	update_player_moves()
 
-
 func initialise_pokemon_instances(pokemons : Variant) -> void:
 	pokemon_instances = pokemons
 	update_player_pokemon()
@@ -136,6 +135,7 @@ func player_turn_start() -> void:
 # Function to change pokemon after death
 func player_pokemon_death() -> void:
 	menu_walk_string = ""
+	#await get_tree().create_timer(2.0).timeout
 	update_player_pokemon()
 	player_actions.erase("Items")
 	player_actions.erase("Moves")

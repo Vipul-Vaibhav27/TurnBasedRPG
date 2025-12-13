@@ -85,6 +85,11 @@ func change_pokemon(p_pokemon_name: String):
 	battle_log_choser_added.emit("Player chose " + combat_state.curr_player + ".")
 	enemy_execution()
 
+func use_item(item_name : String):
+	turn.next()
+	enemy_execution()
+
+
 func check_death(poke: PokemonInstance) -> bool:
 	return poke.current_hp == 0
 
@@ -143,7 +148,7 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot):
 			change_enemy()
 		else:
 			battle_log_critical_added.emit("Player's " + combat_state.curr_player + " is dead!")
-			await get_tree().create_timer(2.0).timeout
+			#await get_tree().create_timer(2.0).timeout
 			player_death.emit()
 	
 	turn.next()
