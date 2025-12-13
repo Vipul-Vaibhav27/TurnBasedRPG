@@ -438,6 +438,134 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 45.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b18rk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xmasf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2eakl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6o473")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2o31n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fo3w1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sx8hx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lt8k5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_acj2v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ksvy8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g7xlc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uf6hx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7yc6p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kt4na")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kld35")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_54quf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jhq8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0lhtj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6bdnl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kdoit")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2scyt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2gaq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8u50p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0iix6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6jgv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u6u17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6xqh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qiu45")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x8pvf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_55hpg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nih57")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iasp3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6elx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yywrn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bx2sq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4yd4a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_skkxf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5iw65")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwuns")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_73pjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8dims")
+}],
+"loop": true,
+"name": &"idle_1",
+"speed": 30.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qpm2a"]
@@ -937,11 +1065,10 @@ bulbasaur = NodePath("Bulbasaur2")
 charmander = NodePath("Charmander2")
 
 [node name="Bulbasaur2" type="AnimatedSprite2D" parent="."]
-visible = false
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_qpm2a")
-animation = &"idle"
-frame_progress = 0.66410834
+animation = &"idle_1"
+frame_progress = 0.09239079
 
 [node name="EnemyHealthBar" parent="." instance=ExtResource("3_qev2r")]
 offset_left = -20.0
@@ -949,6 +1076,7 @@ offset_top = 15.0
 offset_right = -20.0
 offset_bottom = 15.0
 scale = Vector2(0.6, 0.6)
+metadata/_edit_use_anchors_ = true
 
 [node name="Charmander2" type="AnimatedSprite2D" parent="."]
 visible = false

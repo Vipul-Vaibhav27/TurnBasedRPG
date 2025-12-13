@@ -25,6 +25,9 @@ func _ready() -> void:
 	all_enemy_pokemon_manager.emit(enemy_pokemon_instances, active_pokemon.species.name)
 	# Reciever UI so that it knows pokemon moves
 	active_enemy_pokemon.emit(active_pokemon)
+	
+	await get_tree().create_timer(2).timeout
+	take_damage()
 
 func change_active_pokemon(new_pokemon : PokemonInstance) -> void:
 	anim_nodes[active_pokemon.species.name].visible = false
@@ -34,6 +37,12 @@ func change_active_pokemon(new_pokemon : PokemonInstance) -> void:
 	anim_nodes[active_pokemon.species.name].play()
 	update_hp()
 	active_enemy_pokemon.emit(active_pokemon)
+
+# A rudimentary damage animation
+func take_damage():
+	for i in range(4):
+		anim_nodes[active_pokemon.species.name].visible = not anim_nodes[active_pokemon.species.name].visible
+		await get_tree().create_timer(0.25).timeout
 
 func update_hp():
 	var curr_hp = active_pokemon.current_hp
