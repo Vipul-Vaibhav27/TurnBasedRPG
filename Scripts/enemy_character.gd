@@ -4,12 +4,11 @@ extends Node2D
 @export var poke_pet_names: Array[String]
 @export var poke_levels: Array[int]
 @export var poke_animations: Array[AnimatedSprite2D]
-@export var poke_resources: Array[PokemonSpecies]
+@export var poke_resource_paths: Array[String]
 @export var move_resources: Array[Move]
 
 @onready var hp_bar = $EnemyHealthBar
 
-var enemy_pokemon_instances = {}
 var active_pokemon: PokemonInstance
 
 signal all_enemy_pokemon(pokemon_instances)
@@ -25,8 +24,8 @@ func _ready() -> void:
 	# Reciever combat manager for getting all pokemon
 	anim_nodes[active_pokemon.species.name].visible = true
 	anim_nodes[active_pokemon.species.name].play()
-	all_enemy_pokemon.emit(enemy_pokemon_instances)
-	all_enemy_pokemon_manager.emit(enemy_pokemon_instances, active_pokemon.name)
+	all_enemy_pokemon.emit(pokemon_instances)
+	all_enemy_pokemon_manager.emit(pokemon_instances, active_pokemon.name)
 	# Reciever UI so that it knows pokemon moves
 	active_enemy_pokemon.emit(active_pokemon)
 
@@ -57,7 +56,7 @@ func initalise_dummy_values() -> void:
 	assert(poke_levels.size() == poke_species_names.size(), "Check your levels and specie names array in Inspector!")
 	assert(move_resources.size() == 4 * poke_species_names.size(), "There must be 4 moves per pokemon!")
 	assert(poke_animations.size() == poke_species_names.size(), "Check your animations and species names input in Inspector!")
-	assert(poke_resources.size() == poke_species_names.size(), "Check your resources and species names input in Inspector!")
+	assert(poke_resource_paths.size() == poke_species_names.size(), "Check your resources and species names input in Inspector!")
 	
 	# Filling dictionaries
 	for i in range(poke_species_names.size()):
@@ -65,7 +64,10 @@ func initalise_dummy_values() -> void:
 		var pet_name: String = poke_pet_names[i]
 		anim_nodes[specie_name] = poke_animations[i]
 		
-		var specie: PokemonSpecies = poke_resources[i]
+		var specie: PokemonSpecies = load(poke_resource_paths[i])
+		if "SPD" in specie.base_stats:
+			specie.base_stats[ALIAS.SPD] = specie.base_stats["SPD"]
+			specie.base_stats.erase("SPD")
 		var instance = PokemonInstance.new(pet_name, specie, poke_levels[i])
 		# Filling moves
 		for j in range(i, i+4):

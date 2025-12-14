@@ -1,11 +1,8 @@
-[gd_scene load_steps=100 format=3 uid="uid://cf11t36eqnirk"]
+[gd_scene load_steps=97 format=3 uid="uid://cf11t36eqnirk"]
 
 [ext_resource type="Script" uid="uid://75a7pmwur4o5" path="res://Scripts/player_character.gd" id="1_qcwfp"]
-[ext_resource type="Script" uid="uid://dhlx803nye16j" path="res://Scripts/Pokemon/pokemon_data.gd" id="2_4pbxa"]
 [ext_resource type="Texture2D" uid="uid://0ucbc3btjten" path="res://SpriteSheets/bulbasaur-back-Sheet.png" id="2_o0f8b"]
-[ext_resource type="Resource" uid="uid://cn5nyuqptkmu5" path="res://Data/species/001_bulbasaur.tres" id="3_ews8v"]
 [ext_resource type="PackedScene" uid="uid://6r3lyshak55c" path="res://Scenes/UI/health_bar.tscn" id="3_o0f8b"]
-[ext_resource type="Resource" uid="uid://cqo81kebcoyox" path="res://Data/species/004_charmander.tres" id="4_12ptb"]
 [ext_resource type="Texture2D" uid="uid://bdhnxtss6kw8w" path="res://SpriteSheets/charmander-back-Sheet.png" id="4_wko77"]
 [ext_resource type="Script" uid="uid://5g2wytns1173" path="res://Scripts/Pokemon/move_data.gd" id="5_6m2el"]
 [ext_resource type="Resource" path="res://Data/moves/033.tres" id="6_euix3"]
@@ -606,7 +603,7 @@ poke_species_names = Array[String](["Bulbasaur", "Charmander"])
 poke_pet_names = Array[String](["Chikni", "Orange"])
 poke_levels = Array[int]([5, 7])
 poke_animations = [NodePath("Bulbasaur"), NodePath("Charmander")]
-poke_resources = Array[ExtResource("2_4pbxa")]([ExtResource("3_ews8v"), ExtResource("4_12ptb")])
+poke_resource_paths = Array[String](["res://Data/species/001_bulbasaur.tres", "res://Data/species/004_charmander.tres"])
 move_resources = Array[ExtResource("5_6m2el")]([ExtResource("6_euix3"), ExtResource("7_nw3ir"), ExtResource("8_euix3"), ExtResource("9_i0ilm"), ExtResource("10_nw3ir"), ExtResource("11_a1rxb"), ExtResource("12_i0ilm"), ExtResource("13_xeb05")])
 
 [node name="Bulbasaur" type="AnimatedSprite2D" parent="."]
