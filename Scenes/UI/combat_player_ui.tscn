@@ -14,14 +14,14 @@ script = ExtResource("1_hh3pv")
 [node name="CombatLog" type="TextEdit" parent="."]
 layout_mode = 0
 offset_right = 1152.0
-offset_bottom = 100.0
+offset_bottom = 122.0
 editable = false
 wrap_mode = 1
 
 [node name="Menu" parent="." instance=ExtResource("2_yihqj")]
 layout_mode = 0
-offset_top = 150.0
-offset_bottom = 150.0
+offset_top = 161.0
+offset_bottom = 161.0
 
 [node name="SelectSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_yihqj")
@@ -30,10 +30,10 @@ bus = &"SFX"
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 500.0
-offset_top = 100.0
-offset_right = 670.0
-offset_bottom = 140.0
+offset_left = 498.0
+offset_top = 125.0
+offset_right = 668.0
+offset_bottom = 165.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "HERE"

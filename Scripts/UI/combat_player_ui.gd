@@ -7,6 +7,9 @@ extends Control
 @onready var victory_music = $VictoryMusic
 @onready var defeat_music = $DefeatMusic
 
+var texts = []
+const MAX_LOG_SIZE = 4
+
 var player_actions = {
 	"Change" : {},
 	"Items" : {},
@@ -90,8 +93,11 @@ func update_action(action):
 
 # Function for updating battle log
 func update_log(text : String):
-	battle_log.text += text
-	battle_log.text += '\n'
+	texts.push_back(text + '\n')
+	if texts.size() > MAX_LOG_SIZE:
+		texts.pop_front()
+	battle_log.text = texts.reduce(func(tot, s): return tot + s, "")
+	
 
 # Functions for initialising and updating pokemon instances and active pokemon
 func update_active_pokemon(pokemon : PokemonInstance) -> void:
