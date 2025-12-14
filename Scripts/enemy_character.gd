@@ -39,7 +39,7 @@ func change_active_pokemon(new_pokemon : PokemonInstance) -> void:
 	anim_nodes[active_pokemon.species.name].play()
 	update_hp()
 	active_enemy_pokemon.emit(active_pokemon)
-	label.text = "Lvl"+str(active_pokemon.level)+"-"+active_pokemon.name
+	label.text = "Lvl "+str(active_pokemon.level)+"-"+active_pokemon.name
 
 # A rudimentary damage animation
 func take_damage():
