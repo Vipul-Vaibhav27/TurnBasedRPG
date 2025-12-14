@@ -8,6 +8,7 @@ extends Node2D
 @export var move_resources: Array[Move]
 
 @onready var hp_bar = $EnemyHealthBar
+@onready var label = $Label
 
 var active_pokemon: PokemonInstance
 
@@ -21,6 +22,7 @@ var pokemon_instances: Dictionary[String, PokemonInstance]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	initalise_dummy_values()
+	label.text = "Lvl"+str(active_pokemon.level)+"-"+active_pokemon.name
 	# Reciever combat manager for getting all pokemon
 	anim_nodes[active_pokemon.species.name].visible = true
 	anim_nodes[active_pokemon.species.name].play()
@@ -37,6 +39,7 @@ func change_active_pokemon(new_pokemon : PokemonInstance) -> void:
 	anim_nodes[active_pokemon.species.name].play()
 	update_hp()
 	active_enemy_pokemon.emit(active_pokemon)
+	label.text = "Lvl"+str(active_pokemon.level)+"-"+active_pokemon.name
 
 # A rudimentary damage animation
 func take_damage():
