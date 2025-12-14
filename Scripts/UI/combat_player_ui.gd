@@ -4,7 +4,8 @@ extends Control
 @onready var battle_log = $CombatLog
 @onready var select_sfx = $SelectSFX
 @onready var result_display = $Label
-@onready var result_sfx = $ResultSFX
+@onready var victory_music = $VictoryMusic
+@onready var defeat_music = $DefeatMusic
 
 var player_actions = {
 	"Change" : {},
@@ -123,7 +124,7 @@ func update_player_pokemon() -> void:
 		# No pokemon left - Player defeated
 		action_menu.queue_free()
 		result_display.text = "DEFEAT"
-		result_sfx.play()
+		defeat_music.play()
 		combat_end.emit()
 		
 
@@ -164,7 +165,7 @@ func player_pokemon_death() -> void:
 func player_victory() -> void:
 	action_menu.queue_free()
 	result_display.text = "VICTORY"
-	result_sfx.play()
+	victory_music.play()
 	combat_end.emit()
 
 # Functions for loading and parsing jsons - unused

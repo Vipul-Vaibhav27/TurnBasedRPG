@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://ps8yath2jxud"]
+[gd_scene load_steps=3 format=3 uid="uid://ps8yath2jxud"]
 
 [ext_resource type="Script" uid="uid://pmts3p50nwhg" path="res://Scripts/UI/menu_item.gd" id="1_jv1tv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yx2l2"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
 
 [node name="MenuItem" type="Control"]
 layout_mode = 3
@@ -12,6 +20,7 @@ script = ExtResource("1_jv1tv")
 layout_mode = 0
 offset_right = 250.0
 offset_bottom = 40.0
+theme_override_styles/focus = SubResource("StyleBoxFlat_yx2l2")
 text = "Placeholder
 "
 
