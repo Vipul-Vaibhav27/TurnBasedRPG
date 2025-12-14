@@ -189,6 +189,8 @@ func change_enemy() -> void:
 
 func enemy_execution() -> void:
 	# Basic Enemy
+	if combat_state.curr_enemy == "":
+		return # If combat is already done
 	execute_enemy_turn.emit()
 	await get_tree().create_timer(2.0).timeout
 	var hp = combat_state.get_stat_current(false, ALIAS.HP)
@@ -208,8 +210,9 @@ func enemy_execution() -> void:
 			heal_move_slots.append(moveslot)
 
 	assert(atk_move_slots.size() != 0, "Wasteful of a pokemon - All heal moves")
-
+	print(atk_move_slots.map(func(move_slot): return move_slot.move_data.name))
 	var rand_attack = randi() % atk_move_slots.size()
+	
 	if heal_move_slots.size() == 0 || curr_hp > thresh * hp:
 		if !execute_turn(atk_move_slots[rand_attack]) && combat_state.curr_enemy != "":
 			execute_player_turn.emit()

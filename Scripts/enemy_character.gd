@@ -70,8 +70,8 @@ func initalise_dummy_values() -> void:
 			specie.base_stats.erase("SPD")
 		var instance = PokemonInstance.new(pet_name, specie, poke_levels[i])
 		# Filling moves
-		for j in range(i, i+4):
-			var move: Move = move_resources[i].duplicate(true)
+		for j in range(4*i, 4*(i+1)):
+			var move: Move = move_resources[j].duplicate(true)
 			instance.learn_move(move)
 		
 		pokemon_instances[instance.name] = instance
