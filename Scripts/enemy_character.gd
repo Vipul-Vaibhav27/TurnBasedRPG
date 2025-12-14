@@ -22,7 +22,7 @@ var pokemon_instances: Dictionary[String, PokemonInstance]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	initalise_dummy_values()
-	label.text = "Lvl"+str(active_pokemon.level)+"-"+active_pokemon.name
+	label.text = "Lvl "+str(active_pokemon.level)+"-"+active_pokemon.name
 	# Reciever combat manager for getting all pokemon
 	anim_nodes[active_pokemon.species.name].visible = true
 	anim_nodes[active_pokemon.species.name].play()

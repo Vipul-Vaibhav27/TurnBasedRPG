@@ -1,4 +1,4 @@
-[gd_scene load_steps=146 format=3 uid="uid://crmeup0pjy7wf"]
+[gd_scene load_steps=147 format=3 uid="uid://crmeup0pjy7wf"]
 
 [ext_resource type="Script" uid="uid://ce135hhera764" path="res://Scripts/enemy_character.gd" id="1_kxb12"]
 [ext_resource type="Texture2D" uid="uid://dffs2gdhprmhl" path="res://SpriteSheets/bulbasaur-Sheet.png" id="2_qev2r"]
@@ -13,6 +13,7 @@
 [ext_resource type="Resource" path="res://Data/moves/022.tres" id="11_xmasf"]
 [ext_resource type="Resource" path="res://Data/moves/124.tres" id="12_2eakl"]
 [ext_resource type="Resource" path="res://Data/moves/075.tres" id="13_6o473"]
+[ext_resource type="FontFile" uid="uid://82maald4tflp" path="res://Assets/Font/BoldPixels.ttf" id="14_bvbam"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sqa42"]
 atlas = ExtResource("2_qev2r")
@@ -1101,10 +1102,13 @@ frame_progress = 0.008809626
 
 [node name="Label" type="Label" parent="."]
 texture_filter = 2
-offset_left = -63.0
+offset_left = -85.0
 offset_top = 23.0
-offset_right = -9.0
-offset_bottom = 35.0
+offset_right = 92.0
+offset_bottom = 31.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("14_bvbam")
 theme_override_font_sizes/font_size = 8
 text = "Lvl1 - <name>"
+horizontal_alignment = 1
+vertical_alignment = 1
