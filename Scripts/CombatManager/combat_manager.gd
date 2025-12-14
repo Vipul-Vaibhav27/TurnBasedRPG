@@ -114,7 +114,7 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot) -> bool:
 	var attacker = combat_state.get_attacker(is_player)
 	var defender = combat_state.get_defender(is_player)
 
-	battle_log_choser_added.emit(attacker.species.name + " chose " + move.name + ".")
+	battle_log_choser_added.emit(attacker.name + " chose " + move.name + ".")
 
 	# ---- Missing Chances
 	if randi() % 100 > move.accuracy:
@@ -142,13 +142,13 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot) -> bool:
 	var damage = DamageCalculator.calculate(attacker, defender, move, battle_log_critical_added)
 	combat_state.take_damage(is_player, damage)
 
-	battle_log_damage_added.emit("It dealt " + str(damage) + " to " + defender.species.name + ".")
+	battle_log_damage_added.emit("It dealt " + str(damage) + " to " + defender.name + ".")
 	# --- HANDLE Drain Moves ---
 	if move.is_drain and move.heal_percent > 0.0:
 		# Drain heals based on DAMAGE dealt, not MAX HP
 		var drain_amount = int(damage * move.heal_percent)
 		combat_state.heal(is_player, drain_amount)
-		battle_log_heal_added.emit(attacker.species.name + " healed " + str(drain_amount) + " damage.")
+		battle_log_heal_added.emit(attacker.name + " healed " + str(drain_amount) + " damage.")
 	
 	move_slot.current_pp -= 1
 	var player_dead = false
@@ -172,6 +172,7 @@ func execute_turn(move_slot: PokemonInstance.MoveSlot) -> bool:
 		#await get_tree().create_timer(1).timeout
 	
 	turn.next()
+	
 	return player_dead
 
 func change_enemy() -> void:

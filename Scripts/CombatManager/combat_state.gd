@@ -22,11 +22,11 @@ class CombatState:
 
 	func load_pokemon(pokemon: PokemonInstance) -> void:
 		# Should be called at the start by CombatManager before every new combat
-		self.player[pokemon.species.name] = pokemon
+		self.player[pokemon.name] = pokemon
 
 	func load_pokemon_enemy(pokemon: PokemonInstance) -> void:
 		# Should be called at the start by CombatManager before every new combat
-		self.enemy[pokemon.species.name] = pokemon
+		self.enemy[pokemon.name] = pokemon
 
 	func duplicate() -> CombatState:
 		# Make a clone of current object

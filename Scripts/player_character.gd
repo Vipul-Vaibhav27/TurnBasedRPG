@@ -1,8 +1,13 @@
 extends Node2D
 
+@export var poke_species_names: Array[String]
+@export var poke_pet_names: Array[String]
+@export var poke_levels: Array[int]
+@export var poke_animations: Array[AnimatedSprite2D]
+@export var poke_resources: Array[PokemonSpecies]
+@export var move_resources: Array[Move]
+
 @onready var hp_bar = $PlayerHealthBar
-@export var bulbasaur: AnimatedSprite2D
-@export var charmander: AnimatedSprite2D
 
 var player_pokemon_instances = {}
 var active_pokemon: PokemonInstance
@@ -12,17 +17,17 @@ signal all_player_pokemon_manager(pokemon_instances, active_name)
 signal active_player_pokemon(pokemon)
 
 var anim_nodes: Dictionary[String, AnimatedSprite2D]
+var pokemon_instances: Dictionary[String, PokemonInstance]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	anim_nodes["Bulbasaur"] = bulbasaur
-	anim_nodes["Charmander"] = charmander
+		
 	initalise_dummy_values()
 	# Reciever combat manager for getting all pokemon
 	anim_nodes[active_pokemon.species.name].visible = true
 	anim_nodes[active_pokemon.species.name].play()
 	all_player_pokemon.emit(player_pokemon_instances)
-	all_player_pokemon_manager.emit(player_pokemon_instances, active_pokemon.species.name)
+	all_player_pokemon_manager.emit(player_pokemon_instances, active_pokemon.name)
 	# Reciever UI so that it knows pokemon moves
 	active_player_pokemon.emit(active_pokemon)
 
@@ -41,7 +46,6 @@ func take_damage():
 		anim_nodes[active_pokemon.species.name].visible = not anim_nodes[active_pokemon.species.name].visible
 		await get_tree().create_timer(0.25).timeout
 
-
 func update_hp():
 	var curr_hp = active_pokemon.current_hp
 	var max_hp = active_pokemon.current_stats[ALIAS.HP]
@@ -49,35 +53,36 @@ func update_hp():
 		return
 	hp_bar.update_hp(curr_hp, max_hp)
 
-func initalise_dummy_values() -> void:	
-	var SPECIES_1 = PokemonSpecies.new()
-	SPECIES_1.name = "Bulbasaur"
-	SPECIES_1.types.assign([TypeChart.Type.GRASS, TypeChart.Type.POISON])
-	var POKEMON_1 = PokemonInstance.new(SPECIES_1, 1)
-	var MOVE_1 = Move.new()
-	var MOVE_2 = Move.new()
-	MOVE_1.name = "m1"
-	MOVE_2.name = "m2"
+func initalise_dummy_values() -> void:
+	var manual_load = load("res://Data/species/004_charmander.tres")
 	
-	POKEMON_1.learn_move(MOVE_1)
-	POKEMON_1.learn_move(MOVE_2)
+	print("Manual Load: ", manual_load)
+	print("Is Resource? ", manual_load is Resource)
+	print("Is PokemonSpecies? ", manual_load is PokemonSpecies)
+	print(poke_species_names)
+	print(poke_pet_names)
+	print(poke_resources)
+	print(poke_animations)
+	print(move_resources)
+	assert(poke_levels.size() == poke_pet_names.size())
+	assert(poke_levels.size() == poke_species_names.size(), "Check your levels and specie names array in Inspector!")
+	assert(move_resources.size() == 4 * poke_species_names.size(), "There must be 4 moves per pokemon!")
+	assert(poke_animations.size() == poke_species_names.size(), "Check your animations and species names input in Inspector!")
+	assert(poke_resources.size() == poke_species_names.size(), "Check your resources and species names input in Inspector!")
 	
-	var SPECIES_2 = PokemonSpecies.new()
-	SPECIES_2.name = "Charmander"
-	SPECIES_2.types.assign([TypeChart.Type.FIRE, TypeChart.Type.DRAGON])
-	var POKEMON_2 = PokemonInstance.new(SPECIES_2, 2)
-	var MOVE_3 = Move.new()
-	var MOVE_4 = Move.new()
-	MOVE_3.name = "m3"
-	MOVE_4.name = "m4"
+	# Filling dictionaries
+	for i in range(poke_species_names.size()):
+		var specie_name: String = poke_species_names[i]
+		var pet_name: String = poke_pet_names[i]
+		anim_nodes[specie_name] = poke_animations[i]
+		
+		var specie: PokemonSpecies = poke_resources[i]
+		var instance = PokemonInstance.new(pet_name, specie, poke_levels[i])
+		# Filling moves
+		for j in range(i, i+4):
+			var move: Move = move_resources[i].duplicate(true)
+			instance.learn_move(move)
+		
+		pokemon_instances[instance.name] = instance
 	
-	POKEMON_2.learn_move(MOVE_3)
-	POKEMON_2.learn_move(MOVE_4)
-	
-	
-	player_pokemon_instances = {
-		"Bulbasaur" : POKEMON_1,
-		"Charmander" : POKEMON_2,
-	}
-	
-	active_pokemon = POKEMON_1
+	active_pokemon = pokemon_instances[poke_pet_names[0]]

@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://t3vnm1lbpphd"]
+[gd_scene load_steps=9 format=3 uid="uid://t3vnm1lbpphd"]
 
 [ext_resource type="PackedScene" uid="uid://cwqowh0kgiels" path="res://Scenes/UI/combat_player_ui.tscn" id="1_7uj85"]
 [ext_resource type="PackedScene" uid="uid://cf11t36eqnirk" path="res://Scenes/player_character.tscn" id="2_2ip8y"]
 [ext_resource type="PackedScene" uid="uid://crmeup0pjy7wf" path="res://Scenes/enemy_character.tscn" id="3_vtehv"]
 [ext_resource type="PackedScene" uid="uid://dxvjktdaf834m" path="res://Scenes/combat_manager.tscn" id="4_loea4"]
+[ext_resource type="Script" uid="uid://dhlx803nye16j" path="res://Scripts/Pokemon/pokemon_data.gd" id="4_sv7pb"]
 [ext_resource type="AudioStream" uid="uid://cc22l71itp88t" path="res://Assets/Music/battle_bgm.mp3" id="5_2ip8y"]
 [ext_resource type="Script" uid="uid://1a01b2vud68f" path="res://Scripts/Music/bgm.gd" id="6_vtehv"]
 [ext_resource type="Texture2D" uid="uid://dtrlb60po3mlt" path="res://SpriteSheets/battle-arena.png" id="7_loea4"]
@@ -25,6 +26,7 @@ region_rect = Rect2(250, 0, 240, 125)
 [node name="PlayerCharacter" parent="." instance=ExtResource("2_2ip8y")]
 position = Vector2(260, 555)
 scale = Vector2(6, 6)
+poke_resources = Array[ExtResource("4_sv7pb")]([null])
 
 [node name="EnemyCharacter" parent="." instance=ExtResource("3_vtehv")]
 position = Vector2(824, 294)

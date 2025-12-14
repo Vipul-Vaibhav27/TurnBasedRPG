@@ -1,15 +1,25 @@
-[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="PokemonSpecies" load_steps=2 format=3 uid="uid://cqo81kebcoyox"]
 
-[ext_resource type="Script" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://dhlx803nye16j" path="res://Scripts/Pokemon/pokemon_data.gd" id="1_script"]
 
 [resource]
 script = ExtResource("1_script")
 name = "Charmander"
-types = [1]
+types = Array[int]([1])
 base_stats = {
-"HP": 39, "Attack": 52, "Defense": 43, "SpAtk": 60, "SpDef": 50, "SPD": 65
+"Attack": 52,
+"Defense": 43,
+"HP": 39,
+"SPD": 65,
+"SpAtk": 60,
+"SpDef": 50
 }
 ev_yield = {
-"HP": 0, "Attack": 0, "Defense": 0, "SpAtk": 0, "SpDef": 0, "SPD": 1
+"Attack": 0,
+"Defense": 0,
+"HP": 0,
+"SPD": 1,
+"SpAtk": 0,
+"SpDef": 0
 }
 xp_yield = 62

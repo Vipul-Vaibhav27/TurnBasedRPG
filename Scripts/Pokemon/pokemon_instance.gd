@@ -2,6 +2,7 @@ class_name PokemonInstance
 
 # --- Data ---
 var species: PokemonSpecies
+var name: String
 var level: int = 1
 var nature_multiplier: Dictionary = {ALIAS.ATK: 1.1, ALIAS.SPATK: 0.9} # Example: Adamant
 
@@ -16,7 +17,8 @@ const MAX_EV_TOTAL = 510
 
 const STAT_KEYS = [ALIAS.HP, ALIAS.ATK, ALIAS.DEF, ALIAS.SPATK, ALIAS.SPDEF, ALIAS.SPD]
 
-func _init(p_species: PokemonSpecies, p_level: int):
+func _init(pet_name: String, p_species: PokemonSpecies, p_level: int):
+	name = pet_name
 	species = p_species
 	level = p_level
 
